@@ -1,0 +1,108 @@
+<mat-toolbar class="">
+
+    <mat-toolbar-row class="">
+       
+        <span class="flex"> <img class="img-fluid-coat" src="assets/images/dpw_coatofarms.png"></span>
+
+        <span class="spacer" style="display: flex; justify-content: flex-end;"> 
+            <img class="img-fluid small-image" src="assets/images/worxtrack.png" [routerLink]="['/']">
+        </span>
+    </mat-toolbar-row>
+
+    <mat-toolbar-row class="toolbar-row menu-bar mat-elevation-z8">
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        <span class="spacer"></span>
+        <div fxFlex fxLayout="row" fxLayoutAlign="flex-end">
+          <ul fxLayout="row" fxLayoutGap="10px">
+              <li>
+                  <button mat-button [matMenuTriggerFor]="menu">
+                      <mat-icon>person_outline</mat-icon>
+                  </button>
+                  <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="logout()">
+                      <mat-icon>exit_to_app</mat-icon>
+                      Sign out
+                  </button>
+                  </mat-menu>
+              </li>
+
+          </ul>
+      </div>
+    </mat-toolbar-row>
+
+
+
+</mat-toolbar>
+
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
+
+<mat-sidenav-container class="sidenav-container">
+    <!-- Sidenav -->
+    <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
+        [fixedTopGap] class="sidenav mat-elevation-z8">
+
+        <div class="profile-card">
+            <div class="header">
+                <br><br>
+              <h6> Username : {{ currentUser.username }}</h6>
+            </div>
+            <img src="assets/images/logo.png"> 
+          </div>
+
+<mat-divider></mat-divider><mat-divider></mat-divider>
+
+    <mat-list>
+    
+        <!-- Admin Menu Items  Project_Manager -->
+    <ng-container>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link" *ngIf="authenticationService.roleMatch(['Project_Manager','Technical_Leader','Management'])" routerLink="/dashboard">
+          <mat-icon>apps</mat-icon>Dashboard
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager'])" routerLink="/project/new-project">
+          <mat-icon>add</mat-icon>New Project
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager'])" routerLink="/project/update-milestone">
+          <mat-icon>update</mat-icon>Active Projects
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager','Technical_Leader','Management'])" routerLink="/project/completed"> 
+          <mat-icon>done_all</mat-icon>Completed Projects
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager','Technical_Leader','Management'])" routerLink="/project/closed">
+          <mat-icon>archived</mat-icon>Closed Projects
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager','Technical_Leader','Management'])" routerLink="/project/view-milestones">
+          <mat-icon>watch_later</mat-icon>View Milestones
+        </a>
+        <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  *ngIf="authenticationService.roleMatch(['Project_Manager','Technical_Leader','Management'])" routerLink="/project/report">
+          <mat-icon>report</mat-icon>View Report
+        </a>
+      
+
+      <mat-divider></mat-divider>
+      <br>
+    
+      <a mat-list-item class="sidenavelement" routerLinkActive="active-link"  routerLink="/logout" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        Log Out
+      </a>
+    </ng-container>
+    </mat-list>
+
+
+    </mat-sidenav>
+    <!-- Main content -->
+    <mat-sidenav-content>
+        <div>
+            <router-outlet>
+                <app-dashboard></app-dashboard>
+            </router-outlet>
+        </div>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+<mat-divider></mat-divider>
+
+<app-footer></app-footer>

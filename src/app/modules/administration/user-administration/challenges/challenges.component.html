@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Add Challenges</h2>
+<mat-dialog-content class="mat-typography">
+
+
+
+        <form #challengesForm="ngForm" (ngSubmit)="addChallenges(challengesForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+
+
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Challenge</mat-label>
+          <textarea matInput name="challengesStatus" [(ngModel)]="implementation.challengesStatus" required></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="challengesDatePicker" (dateChange)="setchallengesDatePicker($event)" name="challengesDate"
+              [(ngModel)]="implementation.challengesDate" required> 
+            <mat-datepicker-toggle matSuffix [for]="challengesDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #challengesDatePicker></mat-datepicker>
+          </mat-form-field>
+          <button mat-stroked-button class="custom-button" mat-dialog-close type="submit" [disabled]="!challengesForm.form.valid"><mat-icon>update</mat-icon>&nbsp; &nbsp;Update</button> 
+          <button mat-stroked-button class="custom-button" mat-dialog-close><mat-icon>close &nbsp;</mat-icon>&nbsp; &nbsp;Close</button>
+      
+      </form>
+
+</mat-dialog-content>
+

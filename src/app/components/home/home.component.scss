@@ -1,0 +1,247 @@
+.heaeder{
+    font-size:22px;
+    color: #c0c0c0 !important;
+    margin-right:15px;
+    padding-bottom:5px;
+    margin:0 15px 10px 0;
+    display:inline-block;
+    border-bottom:2px solid transparent;   
+  }
+  .card.highlight-card {
+    //background-color: #1976d2;
+    color: goldenrod;
+    font-weight: 600;
+    border: none;
+    width: auto;
+    min-width: 30%;
+    position: relative;
+  }
+
+  .card.card.highlight-card span {
+    margin-left: 60px;
+  }
+  
+  .mat-sidenav-container {
+    height: 100%;
+    display: flex;  
+  }
+  
+  .buttons{
+      width: 100%;
+      height:100%;  
+      margin-left: 0;
+      margin-right: 0;
+  }
+  
+  .mat-toolbar.mat-primary {
+    position: sticky;
+    top: 0;
+  }
+
+// .mat-list .mat-list-item {
+//   color: rgb(235,136,14) !important;
+//   background-color: rgba(0,0,0,0.2) !important; 
+// }
+  
+.mat-nav-list .mat-list-item {
+    font-size: 1em !important;
+}
+.sidenavelement{
+   /* padding-left: 20px; */
+    color: rgb(54, 69, 79);
+}
+.sidenav {
+   /* margin: 9px 0px; */
+    width: 300px !important;
+   // background-color: #c0c0c0 !important;  
+    font-size: 1em !important;
+}
+.mat-sidenav-content {
+   /* padding: 1px !important; */
+    height: 100% !important;
+    width: 100% !important;
+}   
+  
+::ng-deep .highlightmenu{
+    background:goldenrod;
+}
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+  padding-left: 0px !important;
+}
+
+mat-expansion-panel-header{    
+  background-color:rgb(235,136,14) !important;
+  font-weight: bold !important;
+}
+
+::ng-deep .mat-list {
+  padding: 0px !important;
+  overflow-x: hidden !important;
+  width:100% ;
+}
+  
+.active-link {
+    background:rgb(226, 225, 220);
+    color: rgb(54, 69, 79);
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    mat-icon{color: rgb(54, 69, 79) !important; }
+}
+  
+.mat-list-option.mat-list-item-focus, .mat-list-option:hover, .mat-nav-list .mat-list-item.mat-list-item-focus, .mat-nav-list .mat-list-item:hover {
+      background: goldenrod;
+      color: #FFFFFF;
+      box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+      mat-icon{color:#FFFFFF !important; }
+}
+.no-shadow {
+    box-shadow: none !important;
+}
+.small-image {
+  max-width: 90px;
+  max-height: 90px;
+  margin-top: 15px;
+}
+
+.flip-card {
+  background-color: transparent;
+  width: 340px;
+  height: 200px;
+  perspective: 1000px;
+  margin-top: 10px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  // text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  padding-top: 5px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.col-5 {
+  width: 30%;
+}
+
+.col-6 {
+  width: 50%;
+}
+
+h6 {
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
+  text-align: left;
+  // border-bottom: 1px dotted;
+  text-transform: uppercase;
+  height: 38px; /* Adjust the height value as needed */
+  padding-left: 10px;
+}
+
+
+
+
+  
+:host{
+  .mat-icon{
+      vertical-align: middle;
+      margin-right: 20px;
+  }
+}
+  .profile-card{
+      text-align: center;
+      padding: 0 20px 20px 20px;
+      img{
+      width: 100px;
+      height: 100px;
+      left: auto;
+      right: auto;
+      // object-fit:cover;
+      // border-radius: 50%;
+  }
+  }
+
+  .example-action-buttons {
+      padding-bottom: 20px;
+    }
+    
+    .example-headers-align .mat-expansion-panel-header-description {
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .example-headers-align .mat-form-field + .mat-form-field {
+      margin-left: 8px;
+    }
+
+    .profile-card img {
+      animation: rotate 5s linear infinite;
+    }
+  
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    } 
+  
+  
+    footer{
+      padding: 20px;
+  }
+
+  ul li {
+    list-style: none;
+}
+
+
+.menu-bar {
+    display: inline-block;
+    height: 35px;
+    background-color: #ffff;
+    color: #fff;
+    padding-top: 10px;
+    position: absolute;
+    bottom: 0;
+    top: 10px;
+    width: 100%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); 
+  }
+
+  .menu-bar mat-icon {
+    color: #fff;
+  }
+
+
+.items{
+    padding-top: 10px;
+}
+
+.top-banner{
+    position: relative;
+    height: 160px;
+    background-color: #fff;
+}
+
+
+
+
+
+  
+    
+   
+  
+  
+    
+    

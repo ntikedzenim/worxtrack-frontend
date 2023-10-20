@@ -1,0 +1,67 @@
+<h2 class="header">Search Recommender</h2>
+
+<div class="search-container">
+  <mat-form-field class="input-field" appearance="outline">
+    <mat-label>Supervisor Name</mat-label>
+    <input matInput type="text" [(ngModel)]="recomender_name" name="recomender_name">
+    <button mat-button matSuffix color="primary" (click)="searchRecomender()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<hr>
+
+<div *ngIf="recomenders.length > 0">
+  <h2 class="header">Select Recommender</h2>
+
+  <div class="supervisor-list">
+    <ul>
+      <li *ngFor="let recomender of recomenders" (click)="selectRecomender(recomender)">
+        <span class="text" [ngClass]="{ 'selected': supervisor === selectedRecomender }">
+          {{ recomender.full_names }} {{ recomender.surname }}
+          <span class="checkmark" *ngIf="recomender === selectedRecomender">&#10004;</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
+
+  <form [formGroup]="RecomenderForm">
+    <button mat-raised-button color="primary" class="update-button" (click)="updateRecomender(RecomenderForm.value)" [disabled]="!selectedRecomender">Update</button>
+  </form>
+</div>
+
+
+
+<h2 class="header">Search Approver</h2>
+
+<div class="search-container">
+  <mat-form-field class="input-field" appearance="outline">
+    <mat-label>Supervisor Name</mat-label>
+    <input matInput type="text" [(ngModel)]="username" name="username">
+    <button mat-button matSuffix color="primary" (click)="searchSupervisors()">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<hr>
+
+<div *ngIf="supervisors.length > 0">
+  <h2 class="header">Select Approver</h2>
+
+  <div class="supervisor-list">
+    <ul>
+      <li *ngFor="let supervisor of supervisors" (click)="selectSupervisor(supervisor)">
+        <span class="text" [ngClass]="{ 'selected': supervisor === selectedSupervisor }">
+          {{ supervisor.full_names }} {{ supervisor.surname }}
+          <span class="checkmark" *ngIf="supervisor === selectedSupervisor">&#10004;</span>
+        </span>
+      </li>
+    </ul>
+  </div>
+  
+
+  <form [formGroup]="myGroup">
+    <button mat-raised-button color="primary" class="update-button" (click)="updateSupervisor(myGroup.value)" [disabled]="!selectedSupervisor">Update</button>
+  </form>
+</div>

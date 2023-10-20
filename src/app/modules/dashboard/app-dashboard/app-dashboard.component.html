@@ -1,0 +1,434 @@
+<div class="row marleft">
+
+    <div class="loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="clearContent"></div><div class="clearContent"></div><div class="clearContent"></div><div class="clearContent"></div>
+  
+    <div class="col m12 s12 mat-elevation-z8">
+  
+      <!-- <div class="col m12 s12 breadcrumb mat-elevation-z8 page-heading">
+        
+      </div> -->
+
+      <div *ngIf="authenticationService.roleMatch(['Management'])">
+      <div class="card-container mt-1">
+        <mat-card  (click)="applyFilterByCard('all')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>All Projects</mat-card-title>
+            <mat-card-subtitle>{{ totalProjectsCount }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-all"></div>
+        </mat-card>
+      
+        <mat-card  (click)="applyFilterByCard('business')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Business Case</mat-card-title>
+            <mat-card-subtitle>{{ waitingProjectsCount }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-business"></div>
+        </mat-card>
+      
+        <mat-card  (click)="applyFilterByCard('procurement')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Procurement</mat-card-title>
+            <mat-card-subtitle>{{ procurementProjectsCount }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-procurement"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('implementation')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Implementation</mat-card-title>
+            <mat-card-subtitle>{{ implementationProjectsCount }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-implementation"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('completed')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Completed</mat-card-title>
+            <mat-card-subtitle>{{ completedProjectsCount }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-completed"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('hold')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>On Hold</mat-card-title>
+            <mat-card-subtitle>{{ countHoldProjects }}</mat-card-subtitle>
+          </mat-card-header>
+        
+          <div class="color-hold"></div>
+        </mat-card>
+        
+      
+        <mat-card (click)="applyFilterByCard('cancelled')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Cancelled</mat-card-title>
+            <mat-card-subtitle>{{ countCancelledProjects }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-cancelled"></div>
+        </mat-card>
+      </div>
+      
+
+      <mat-form-field class="full-width mt-5">
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter1($event)" placeholder="Filter" [(ngModel)]="filterValue" #input>
+      </mat-form-field>
+      
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource1" matSort>
+          <!-- Project Title Column -->
+          <ng-container matColumnDef="projectTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Title </th>
+            <td mat-cell *matCellDef="let row">{{ row.projectTitle }}</td>
+          </ng-container>
+      
+          <!-- Date Created Column -->
+          <ng-container matColumnDef="dateCreated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
+            <td mat-cell *matCellDef="let row">{{ row.dateCreated }}</td>
+          </ng-container>
+      
+    <!-- Days Since Creation Column -->
+    <ng-container matColumnDef="daysSinceCreation">
+      <th mat-header-cell *matHeaderCellDef> Project Duration (Months and Days) </th>
+      <td mat-cell *matCellDef="let row">
+        {{ getCalculateMonthsAndDaysBetween(row).months }} months
+        {{ getCalculateMonthsAndDaysBetween(row).days }} days
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{
+        'status-in-progress': row.status === 'Procurement in Progress',
+        'status-Implementation-in-Progress': row.status === 'Implementation in Progress',
+        'status-completed': row.status === 'Completed',
+        'status-on-hold': row.status === 'On Hold',
+        'status-cancelled': row.status === 'Cancelled',
+        'status-Waiting-For-Business-Case ': row.status === 'Waiting for Business Case',
+        'status-flash': shouldFlashStatus(row),
+        'status-busines-flash': businessCaseFlash(row),
+        'status-procurement-flash': procurementFlash(row),
+        'status-implementation-flash': implementationFlash(row)
+      }">{{ row.status }}</td>
+    </ng-container>
+      
+          <!-- View Column -->
+          <ng-container matColumnDef="view">
+            <th mat-header-cell *matHeaderCellDef>View</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-icon-button color="primary" aria-label="view" (click)="viewProject(row)">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns1"></tr>
+      
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"  [length]="dataSource1.data.length"></mat-paginator>
+      
+      </div>
+      </div>
+
+
+
+
+      <div  *ngIf="authenticationService.roleMatch(['Project_Manager'])">
+
+      <div class="card-container mt-1">
+        <mat-card (click)="applyFilterByCard('all')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>All Projects</mat-card-title>
+            <mat-card-subtitle>{{ countAllOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-all"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('business')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Business Case</mat-card-title>
+            <mat-card-subtitle>{{ countBusinessOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-business"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('procurement')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Procurement</mat-card-title>
+            <mat-card-subtitle>{{ countProcurementOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-procurement"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('implementation')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Implementation</mat-card-title>
+            <mat-card-subtitle>{{ countImplementationOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-implementation"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('completed')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Completed</mat-card-title>
+            <mat-card-subtitle>{{ countCompletedOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-completed"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('hold')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>On Hold</mat-card-title>
+            <mat-card-subtitle>{{ countHoldOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-hold"></div>
+        </mat-card>
+      
+        <mat-card (click)="applyFilterByCard('cancelled')">
+          <mat-card-header class="dashboard">
+            <mat-card-title>Cancelled</mat-card-title>
+            <mat-card-subtitle>{{ countCancelledOwner }}</mat-card-subtitle>
+          </mat-card-header>
+      
+          <div class="color-cancelled"></div>
+        </mat-card>
+        </div>
+
+
+      <div class="clearContent"></div>
+
+<mat-form-field class="full-width">
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Filter" [(ngModel)]="filterValue" #input>
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <!-- Project Title Column -->
+    <ng-container matColumnDef="projectTitle">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Title </th>
+      <td mat-cell *matCellDef="let row">{{ row.projectTitle }}</td>
+    </ng-container>
+
+    <!-- Date Created Column -->
+    <ng-container matColumnDef="dateCreated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
+      <td mat-cell *matCellDef="let row">{{ row.dateCreated }}</td>
+    </ng-container>
+
+    <!-- Days Since Creation Column -->
+    <ng-container matColumnDef="daysSinceCreation">
+      <th mat-header-cell *matHeaderCellDef> Project Duration (Months and Days) </th>
+      <td mat-cell *matCellDef="let row">
+        {{ getCalculateMonthsAndDaysBetween(row).months }} months
+        {{ getCalculateMonthsAndDaysBetween(row).days }} days
+      </td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let row" [ngClass]="{
+        'status-in-progress': row.status === 'Procurement in Progress',
+        'status-Implementation-in-Progress': row.status === 'Implementation in Progress',
+        'status-completed': row.status === 'Completed',
+        'status-on-hold': row.status === 'On Hold',
+        'status-cancelled': row.status === 'Cancelled',
+        'status-Waiting-For-Business-Case ': row.status === 'Waiting for Business Case',
+        'status-flash': shouldFlashStatus(row),
+        'status-busines-flash': businessCaseFlash(row),
+        'status-procurement-flash': procurementFlash(row),
+        'status-implementation-flash': implementationFlash(row)
+      }">{{ row.status }}</td>
+    </ng-container>
+
+    <!-- View Column -->
+    <ng-container matColumnDef="view">
+      <th mat-header-cell *matHeaderCellDef>View</th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" aria-label="view"  (click)="viewProject(row)">
+          <mat-icon>visibility</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"</td>
+    </tr>
+  </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length"></mat-paginator>
+  </div>
+</div>
+
+
+
+
+<div  *ngIf="authenticationService.roleMatch(['Technical_Leader'])">
+
+  <div class="card-container mt-1">
+    <mat-card (click)="applyFilterByCard('all')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>All Projects</mat-card-title>
+        <mat-card-subtitle>{{ countAllTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-all"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('business')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>Business Case</mat-card-title>
+        <mat-card-subtitle>{{ countBusinessTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-business"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('procurement')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>Procurement</mat-card-title>
+        <mat-card-subtitle>{{ countProcurementTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-procurement"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('implementation')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>Implementation</mat-card-title>
+        <mat-card-subtitle>{{ countImplementationTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-implementation"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('completed')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>Completed</mat-card-title>
+        <mat-card-subtitle>{{ countCompletedTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-completed"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('hold')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>On Hold</mat-card-title>
+        <mat-card-subtitle>{{ countHoldTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-hold"></div>
+    </mat-card>
+  
+    <mat-card (click)="applyFilterByCard('cancelled')">
+      <mat-card-header class="dashboard">
+        <mat-card-title>Cancelled</mat-card-title>
+        <mat-card-subtitle>{{ countCancelledTechnical }}</mat-card-subtitle>
+      </mat-card-header>
+  
+      <div class="color-cancelled"></div>
+    </mat-card>
+    </div>
+
+
+  <div class="clearContent"></div>
+
+<mat-form-field class="full-width">
+<mat-label>Filter</mat-label>
+<input matInput (keyup)="applyFilter($event)" placeholder="Filter" [(ngModel)]="filterValue" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+
+<table mat-table [dataSource]="dataSource2" matSort>
+<!-- Project Title Column -->
+<ng-container matColumnDef="projectTitle">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Title </th>
+  <td mat-cell *matCellDef="let row">{{ row.projectTitle }}</td>
+</ng-container>
+
+<!-- Date Created Column -->
+<ng-container matColumnDef="dateCreated">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Created </th>
+  <td mat-cell *matCellDef="let row">{{ row.dateCreated }}</td>
+</ng-container>
+
+    <!-- Days Since Creation Column -->
+    <ng-container matColumnDef="daysSinceCreation">
+      <th mat-header-cell *matHeaderCellDef> Project Duration (Months and Days) </th>
+      <td mat-cell *matCellDef="let row">
+        {{ getCalculateMonthsAndDaysBetween(row).months }} months
+        {{ getCalculateMonthsAndDaysBetween(row).days }} days
+      </td>
+    </ng-container>
+
+<!-- Status Column -->
+<ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+  <td mat-cell *matCellDef="let row" [ngClass]="{
+    'status-in-progress': row.status === 'Procurement in Progress',
+    'status-Implementation-in-Progress': row.status === 'Implementation in Progress',
+    'status-completed': row.status === 'Completed',
+    'status-on-hold': row.status === 'On Hold',
+    'status-cancelled': row.status === 'Cancelled',
+    'status-Waiting-For-Business-Case ': row.status === 'Waiting for Business Case'
+  }">{{ row.status }}</td>
+</ng-container>
+
+<!-- View Column -->
+<ng-container matColumnDef="view">
+  <th mat-header-cell *matHeaderCellDef>View</th>
+  <td mat-cell *matCellDef="let row">
+    <button mat-icon-button color="primary" aria-label="view"  (click)="viewProject(row)">
+      <mat-icon>visibility</mat-icon>
+    </button>
+  </td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+
+<!-- Row shown when there is no matching data. -->
+<tr class="mat-row" *matNoDataRow>
+  <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"</td>
+</tr>
+</table>
+
+<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource2.data.length"></mat-paginator>
+</div>
+</div>
+
+
+
+
+</div>
+</div>

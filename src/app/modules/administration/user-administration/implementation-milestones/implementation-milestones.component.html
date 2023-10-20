@@ -1,0 +1,1026 @@
+<div class="row marleft">
+
+
+  <div class="clearContent"></div><div class="clearContent"></div><div class="clearContent"></div>
+  
+
+  <div class="col m12 s12 mat-elevation-z8">
+
+<h5 class="header">
+    <span class="project-title"><button class="custom-button" mat-stroked-button color="primary" routerLink="/project/update-milestone"><mat-icon>keyboard_arrow_left</mat-icon> &nbsp;Back</button>Implementation Milestone: {{project.projectTitle}}</span>
+    <span class="estimated-value" > <button class="button" (click)="openDialog(project.ptsRef)" class="custom-button" mat-stroked-button><mat-icon>add</mat-icon> &nbsp; Challenges</button> Estimated Value: <span style="color: red;">{{ project.estimatedValue | currency: 'ZAR': 'symbol-narrow': '1.2-2' }}</span></span>
+  </h5>
+  
+  <div class="tab-group-container">
+  
+  <mat-tab-group #tabGroup [selectedIndex]="activeTabIndex">
+      <mat-tab label="Awarded Project Value - Kick-off Meeting" >
+  
+          <div class="card-container mt-3">
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Awarded Project Value</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of AwardedProjectValue">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Amount :  {{implementation.awardedProjectValueStatus | currency: 'ZAR': 'symbol-narrow': '1.2-2'}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarks}}</p> -->
+                  <p>Date : {{implementation.awardedProjectValueDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                        <button mat-icon-button color="primary" (click)="editAwarded(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #awardedProjectForm="ngForm" (ngSubmit)="addAwardedProjectValue(awardedProjectForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput name="awardedProjectValueStatus" [(ngModel)]="implementation.awardedProjectValueStatus" required pattern="[0-9]*">
+                <mat-error>
+                  Please enter a valid number only.
+                </mat-error>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarks" [(ngModel)]="implementation.remarks"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="awardedProjectValueDatePicker" (dateChange)="setawardedProjectValueDatePicker($event)" name="awardedProjectValueDate"
+                  [(ngModel)]="implementation.awardedProjectValueDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="awardedProjectValueDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #awardedProjectValueDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!awardedProjectForm.form.valid">
+                      <mat-icon *ngIf="isEditingAwarded">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingAwarded">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingAwarded ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+             
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Expenditure</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of Expenditure">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Amount : {{implementation.expenditureStatus | currency: 'ZAR': 'symbol-narrow': '1.2-2'}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarksEx}}</p> -->
+                  <p>Date : {{implementation.expenditureDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                        <button mat-icon-button color="primary" (click)="editExpenditure(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #expenditureForm="ngForm" (ngSubmit)="addExpenditure(expenditureForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Amount</mat-label>
+                <input matInput name="expenditureStatus" [(ngModel)]="implementation.expenditureStatus" required pattern="[0-9]*">
+                <mat-error>
+                  Please enter a valid number only.
+                </mat-error>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarksEx" [(ngModel)]="implementation.remarksEx"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="expenditureDatePicker" (dateChange)="setexpenditureDatePicker($event)" name="expenditureDate"
+                    [(ngModel)]="implementation.expenditureDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="expenditureDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #expenditureDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!expenditureForm.form.valid">
+                      <mat-icon *ngIf="isEditingExpenditure">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingExpenditure">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingExpenditure ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Appointed Service Provider</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of AppointedServiceProvider">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Name : {{implementation.appointedServiceProviderStatus}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarksAppointed}}</p> -->
+                  <p>Date : {{implementation.appointedServiceProviderDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                                    <button mat-icon-button color="primary" (click)="editAppointed(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #serviceProviderForm="ngForm" (ngSubmit)="addAppointedServiceProvider(serviceProviderForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->         
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput name="appointedServiceProviderStatus" [(ngModel)]="implementation.appointedServiceProviderStatus" required>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarksAppointed" [(ngModel)]="implementation.remarksAppointed"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="appointedServiceProviderDatePicker" (dateChange)="setappointedServiceProviderDatePicker($event)" name="appointedServiceProviderDate"
+                    [(ngModel)]="implementation.appointedServiceProviderDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="appointedServiceProviderDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #appointedServiceProviderDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!serviceProviderForm.form.valid">
+                      <mat-icon *ngIf="isEditingAppointed">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingAppointed">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingAppointed ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Kick-off Meeting</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of KickOffMeeting">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{implementation.kickoffMeetingStatus}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarksKickoff}}</p> -->
+                  <p>Date : {{implementation.kickoffMeetingDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                                    <button mat-icon-button color="primary" (click)="editKickoff(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #kickoffForm="ngForm" (ngSubmit)="addKickOffMeeting(kickoffForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="kickoffMeetingStatus" [(ngModel)]="implementation.kickoffMeetingStatus" required>
+                      <mat-option value="Completed">Completed</mat-option>
+                      <mat-option value="Scheduled">Scheduled</mat-option>
+                      <mat-option value="None">None</mat-option>
+                      </mat-select>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarksKickoff" [(ngModel)]="implementation.remarksKickoff"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="kickoffMeetingDatePicker" (dateChange)="setkickoffMeetingDatePicker($event)" name="kickoffMeetingDate"
+                    [(ngModel)]="implementation.kickoffMeetingDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="kickoffMeetingDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #kickoffMeetingDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!kickoffForm.form.valid">
+                      <mat-icon *ngIf="isEditingKickoff">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingKickoff">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingKickoff ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+          </div>
+  
+      </mat-tab>
+  
+      <mat-tab label="Purchase order - Information Gathering / URS" >
+  
+          <div class="card-container mt-3">
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Purchase order</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of PurchaseOrders">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{implementation.purchaseOrderStatus}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarksPurchase}}</p> -->
+                  <p>Date : {{implementation.purchasedOrderDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                                    <button mat-icon-button color="primary" (click)="editPurchase(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #purchaseOrderForm="ngForm" (ngSubmit)="addPurchaseOrder(purchaseOrderForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="purchaseOrderStatus" [(ngModel)]="implementation.purchaseOrderStatus" required>
+                    <mat-option value="Created">Created</mat-option>
+                    <mat-option value="In Progress">In Progress</mat-option>
+                    <mat-option value="Submitted to service provider">Submitted to service provider</mat-option>
+                      </mat-select>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarksPurchase" [(ngModel)]="implementation.remarksPurchase"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="purchasedOrderDatePicker" (dateChange)="setpurchasedOrderDatePicker($event)" name="purchasedOrderDate"
+                    [(ngModel)]="implementation.purchasedOrderDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="purchasedOrderDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #purchasedOrderDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!purchaseOrderForm.form.valid">
+                      <mat-icon *ngIf="isEditingPurchase">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingPurchase">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingPurchase ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Project Charter</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div *ngFor="let implementation of ProjectCharters">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{implementation.projectCharterStatus}}</p>  
+                  <!-- <p>Remarks : {{implementation.remarksCharter}}</p> -->
+                  <p>Date : {{implementation.projectCharterDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+                                    <button mat-icon-button color="primary" (click)="editCharter(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+              <form #projectCharterForm="ngForm" (ngSubmit)="addProjectCharter(projectCharterForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="projectCharterStatus" [(ngModel)]="implementation.projectCharterStatus" required>
+                    <mat-option value="Completed">Completed</mat-option>
+                    <!-- <mat-option value="Scheduled">Scheduled</mat-option>
+                    <mat-option value="None">None</mat-option> -->
+                      </mat-select>
+              </mat-form-field>
+  
+              <!-- <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarksCharter" [(ngModel)]="implementation.remarksCharter"></textarea>
+              </mat-form-field> -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="projectCharterDatePicker" (dateChange)="setprojectCharterDatePicker($event)" name="projectCharterDate"
+                    [(ngModel)]="implementation.projectCharterDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="projectCharterDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #projectCharterDatePicker></mat-datepicker>
+                </mat-form-field>
+                                  <button class="button" mat-button type="submit" [disabled]="!projectCharterForm.form.valid">
+                      <mat-icon *ngIf="isEditingCharter">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingCharter">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingCharter ? 'Edit' : 'Update' }}
+                    </button>
+            
+            </form>
+            </mat-card>
+  
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Service Level / License Agreement</mat-card-title>
+            </mat-card-header>
+  
+            <mat-card-content class="mt-3">
+  
+              <div *ngFor="let implementation of ServiceLevelAgreements">
+                <div class="custom-card-content">
+                  <div class="content">
+                <p>Status : {{implementation.serviceLevelStatus}}</p>  
+                <!-- <p>Remarks : {{implementation.remarksSLA}}</p> -->
+                <p>Date : {{implementation.serviceLevelDate | date:'dd-MM-yyyy'}}</p>
+              </div>
+  
+                                  <button mat-icon-button color="primary" (click)="editSLA(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+            
+            <form #slaForm="ngForm" (ngSubmit)="addServiceLevelAgreement(slaForm)">
+  
+              <!--Hidden Start-->
+              <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+              <!--Hidden End-->
+  
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select name="serviceLevelStatus" [(ngModel)]="implementation.serviceLevelStatus" required>
+                  <mat-option value="Legal Opinion">Legal Opinion</mat-option>
+                  <mat-option value="In progress">In progress</mat-option>
+                  <mat-option value="Completed">Completed</mat-option>
+                  <!-- <mat-option value="Draft reviewed">Draft reviewed</mat-option>
+                  <mat-option value="Comments received from legal">Comments received from legal</mat-option>  -->
+                </mat-select>
+            </mat-form-field>
+  
+            <!-- <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput name="remarksSLA" [(ngModel)]="implementation.remarksSLA"></textarea>
+            </mat-form-field> -->
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="serviceLevelDatePicker" (dateChange)="setserviceLevelDatePicker($event)" name="serviceLevelDate"
+                  [(ngModel)]="implementation.serviceLevelDate" required>
+                <mat-datepicker-toggle matSuffix [for]="serviceLevelDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #serviceLevelDatePicker></mat-datepicker>
+              </mat-form-field>
+                                <button class="button" mat-button type="submit" [disabled]="!slaForm.form.valid">
+                      <mat-icon *ngIf="isEditingSLA">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingSLA">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingSLA ? 'Edit' : 'Update' }}
+                    </button>
+  
+          </form>
+          </mat-card>
+  
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Information Gathering / URS</mat-card-title>
+            </mat-card-header>
+  
+            <mat-card-content class="mt-3">
+  
+              <div *ngFor="let implementation of InformationGatherings">
+                <div class="custom-card-content">
+                  <div class="content">
+                <p>Status : {{implementation.informationGatheringStatus}}</p> 
+                <!-- <p>Remarks : {{implementation.remarksURS}}</p>  -->
+                <p>Date : {{implementation.informationGatheringDate | date:'dd-MM-yyyy'}}</p>
+              </div>
+  
+                                  <button mat-icon-button color="primary" (click)="editURS(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+  
+            <form #informationGatheringForm="ngForm" (ngSubmit)="addInformationGathering(informationGatheringForm)">
+          
+              <!--Hidden Start-->
+              <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+              <!--Hidden End-->
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select name="informationGatheringStatus" [(ngModel)]="implementation.informationGatheringStatus" required>
+                  <mat-option value="Completed">Completed</mat-option>
+                  <mat-option value="Scheduled">Scheduled</mat-option>
+                  <mat-option value="None">None</mat-option>
+                    </mat-select>
+            </mat-form-field>
+  
+            <!-- <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput name="remarksURS" [(ngModel)]="implementation.remarksURS"></textarea>
+            </mat-form-field> -->
+          
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="informationGatheringDatePicker" (dateChange)="setinformationGatheringDatePicker($event)" name="informationGatheringDate"
+                  [(ngModel)]="implementation.informationGatheringDate" required>
+                <mat-datepicker-toggle matSuffix [for]="informationGatheringDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #informationGatheringDatePicker></mat-datepicker>
+              </mat-form-field>
+                                <button class="button" mat-button type="submit" [disabled]="!informationGatheringForm.form.valid">
+                      <mat-icon *ngIf="isEditingURS">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingURS">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingURS ? 'Edit' : 'Update' }}
+                    </button>
+          
+          </form>
+          </mat-card>
+  
+          </div>
+  
+      </mat-tab>
+  
+      <mat-tab label="Architectural Design / FRS - Installation & Configuration" >
+  
+        <div class="card-container mt-3">
+  
+            <mat-card class="w-25">
+                <mat-card-header>
+                  <mat-card-title>Architectural Design / FRS</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                  <div *ngFor="let implementation of ArchitecturalDesigns">
+                    <div class="custom-card-content">
+                      <div class="content">
+                    <p>Status : {{implementation.architecturalDesignStatus}}</p>  
+                    <!-- <p>Remarks : {{implementation.remarksFRS}}</p> -->
+                    <p>Date : {{implementation.architecturalDesignDate | date:'dd-MM-yyyy'}}</p>
+                  </div>
+                                      <button mat-icon-button color="primary" (click)="editFRS(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+                <form #architecturalForm="ngForm" (ngSubmit)="addArchitecturalDesign(architecturalForm)">
+              
+                  <!--Hidden Start-->
+                  <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                  <!--Hidden End-->
+  
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select name="architecturalDesignStatus" [(ngModel)]="implementation.architecturalDesignStatus" required>
+                    <mat-option value="Completed">Completed</mat-option>
+                    <mat-option value="Scheduled">Scheduled</mat-option>
+                    <mat-option value="None">None</mat-option>
+                        </mat-select>
+                </mat-form-field>
+  
+                <!-- <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Remarks</mat-label>
+                  <textarea matInput name="remarksFRS" [(ngModel)]="implementation.remarksFRS"></textarea>
+                </mat-form-field> -->
+              
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="architecturalDesignDatePicker" (dateChange)="setarchitecturalDesignDatePicker($event)" name="architecturalDesignDate"
+                      [(ngModel)]="implementation.architecturalDesignDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="architecturalDesignDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #architecturalDesignDatePicker></mat-datepicker>
+                  </mat-form-field> 
+                                    <button class="button" mat-button type="submit" [disabled]="!architecturalForm.form.valid">
+                      <mat-icon *ngIf="isEditingFRS">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingFRS">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingFRS ? 'Edit' : 'Update' }}
+                    </button> 
+              
+              </form>
+              </mat-card>
+  
+              <mat-card class="w-25">
+                <mat-card-header>
+                  <mat-card-title>Software Delivered</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+  
+                  <div *ngFor="let implementation of SoftwareDeliveries">
+                    <div class="custom-card-content">
+                      <div class="content">
+                    <p>Status : {{implementation.softwareDeliveredStatus}}</p>  
+                    <!-- <p>Remarks : {{implementation.remarksSoftware}}</p> -->
+                    <p>Date : {{implementation.softwareDeliveredDate | date:'dd-MM-yyyy'}}</p>
+                  </div> 
+                                      <button mat-icon-button color="primary" (click)="editSoftware(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+                <form #softwareDeliveryForm="ngForm" (ngSubmit)="addSoftwareDelivered(softwareDeliveryForm)">
+              
+                  <!--Hidden Start-->
+                  <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                  <!--Hidden End-->
+  
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select name="softwareDeliveredStatus" [(ngModel)]="implementation.softwareDeliveredStatus" required>
+                      <mat-option value="Received">Received</mat-option>
+                      <mat-option value="Not Received ">Not Received </mat-option>
+                      <mat-option value="None">None</mat-option>
+                        </mat-select>
+                </mat-form-field>
+  
+                <!-- <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Remarks</mat-label>
+                  <textarea matInput name="remarksSoftware" [(ngModel)]="implementation.remarksSoftware"></textarea>
+                </mat-form-field> -->
+              
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="softwareDeliveredDatePicker" (dateChange)="setsoftwareDeliveredDatePicker($event)" name="softwareDeliveredDate"
+                      [(ngModel)]="implementation.softwareDeliveredDate" required>
+                    <mat-datepicker-toggle matSuffix [for]="softwareDeliveredDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #softwareDeliveredDatePicker></mat-datepicker>
+                  </mat-form-field> 
+                                    <button class="button" mat-button type="submit" [disabled]="!softwareDeliveryForm.form.valid">
+                      <mat-icon *ngIf="isEditingSoftware">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingSoftware">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingSoftware ? 'Edit' : 'Update' }}
+                    </button> 
+              
+              </form>
+              </mat-card>
+  
+              <mat-card class="w-25">
+                <mat-card-header>
+                  <mat-card-title>Hardware Delivered</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+    
+                  <div *ngFor="let implementation of HardwareDeliveries">
+                    <div class="custom-card-content">
+                      <div class="content">
+                    <p>Status : {{implementation.hardwareDeliveredStatus}}</p>  
+                    <!-- <p>Remarks : {{implementation.remarksHardware}}</p> -->
+                    <p>Date : {{implementation.hardwareDeliveredDate | date:'dd-MM-yyyy'}}</p>
+                  </div> 
+  
+                                      <button mat-icon-button color="primary" (click)="editHardware(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+                <form #hardwareDeliveryForm="ngForm" (ngSubmit)="addHardwareDelivered(hardwareDeliveryForm)">
+              
+                  <!--Hidden Start-->
+                  <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                  <!--Hidden End-->
+    
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select name="hardwareDeliveredStatus" [(ngModel)]="implementation.hardwareDeliveredStatus" required>
+                      <mat-option value="Received">Received</mat-option>
+                      <mat-option value="Not Received ">Not Received </mat-option>
+                      <mat-option value="None">None</mat-option>
+                        </mat-select>
+                </mat-form-field>
+  
+                <!-- <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Remarks</mat-label>
+                  <textarea matInput name="remarksHardware" [(ngModel)]="implementation.remarksHardware"></textarea>
+                </mat-form-field> -->
+              
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="hardwareDeliveredDatePicker" (dateChange)="sethardwareDeliveredDatePicker($event)" name="hardwareDeliveredDate"
+                      [(ngModel)]="implementation.hardwareDeliveredDate" required> 
+                    <mat-datepicker-toggle matSuffix [for]="hardwareDeliveredDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #hardwareDeliveredDatePicker></mat-datepicker>
+                  </mat-form-field>
+                                    <button class="button" mat-button type="submit" [disabled]="!hardwareDeliveryForm.form.valid">
+                      <mat-icon *ngIf="isEditingHardware">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingHardware">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingHardware ? 'Edit' : 'Update' }}
+                    </button> 
+              
+              </form>
+              </mat-card>
+  
+              <mat-card class="w-25">
+                <mat-card-header>
+                  <mat-card-title>Installation & Configuration</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+  
+                  <div *ngFor="let implementation of InstallationAndConfigurations">
+                    <div class="custom-card-content">
+                      <div class="content">
+                    <p>Status : {{implementation.installationStatus}}</p>  
+                    <!-- <p>Remarks : {{implementation.remarksInstallation}}</p> -->
+                    <p>Date : {{implementation.installationDate | date:'dd-MM-yyyy'}}</p>
+                  </div>
+    
+                                      <button mat-icon-button color="primary" (click)="editInstalation(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+                <form #instalationForm="ngForm" (ngSubmit)="addInstallationAndConfiguration(instalationForm)">
+              
+                  <!--Hidden Start-->
+                  <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                  <!--Hidden End-->
+    
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select name="installationStatus" [(ngModel)]="implementation.installationStatus" required>
+                      <mat-option value="Installed">Installed</mat-option>
+                      <mat-option value="Not Installed">Not Installed</mat-option>
+                      <mat-option value="Configured">Configured</mat-option>
+                      <mat-option value="Not Configured">Not Configured</mat-option>
+                        </mat-select>
+                </mat-form-field>
+  
+                <!-- <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Remarks</mat-label>
+                  <textarea matInput name="remarksInstallation" [(ngModel)]="implementation.remarksInstallation"></textarea>
+                </mat-form-field> -->
+              
+                  <mat-form-field class="full-width" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput [matDatepicker]="installationDatePicker" (dateChange)="setinstallationDatePicker($event)" name="installationDate"
+                      [(ngModel)]="implementation.installationDate" required> 
+                    <mat-datepicker-toggle matSuffix [for]="installationDatePicker"></mat-datepicker-toggle>
+                    <mat-datepicker #installationDatePicker></mat-datepicker>
+                  </mat-form-field>
+                                    <button class="button" mat-button type="submit" [disabled]="!instalationForm.form.valid">
+                      <mat-icon *ngIf="isEditingInstalation">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingInstalation">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingInstalation ? 'Edit' : 'Update' }}
+                    </button> 
+              
+              </form>
+              </mat-card>
+  
+        </div>
+  
+    </mat-tab>
+  
+    <mat-tab label="System Development/Enhancement - Close-out / Hand-over Report" >
+  
+      <div class="card-container mt-3">
+  
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>System Development/Enhancement</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div *ngFor="let implementation of SystemDevelopmentEnhancements">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{implementation.systemDevelopmentStatus}}</p>  
+              <!-- <p>Remarks : {{implementation.remarksDevelopment}}</p> -->
+              <p>Date : {{implementation.systemDevelopmentDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+  
+                                <button mat-icon-button color="primary" (click)="editDevelopment(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+          <form #systemDevForm="ngForm" (ngSubmit)="addSystemDevelopmentEnhancement(systemDevForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="systemDevelopmentStatus" [(ngModel)]="implementation.systemDevelopmentStatus" required>
+                <mat-option value="In Progress">In Progress</mat-option>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Not Completed">Not Completed</mat-option>
+                <mat-option value="None">None</mat-option>
+                  </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput name="remarksDevelopment" [(ngModel)]="implementation.remarksDevelopment"></textarea>
+          </mat-form-field> -->
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="systemDevelopmentDatePicker" (dateChange)="setsystemDevelopmentDatePicker($event)" name="systemDevelopmentDate"
+                [(ngModel)]="implementation.systemDevelopmentDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="systemDevelopmentDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #systemDevelopmentDatePicker></mat-datepicker>
+            </mat-form-field>
+                              <button class="button" mat-button type="submit" [disabled]="!systemDevForm.form.valid">
+                      <mat-icon *ngIf="isEditingDevelopment">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingDevelopment">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingDevelopment ? 'Edit' : 'Update' }}
+                    </button> 
+        
+        </form>
+        </mat-card>
+  
+              <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Solution Testing</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div *ngFor="let implementation of SolutionTestings">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{implementation.solutionTestingStatus}}</p>  
+              <!-- <p>Remarks : {{implementation.remarksTesting}}</p> -->
+              <p>Date : {{implementation.solutionTestingDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+  
+                                <button mat-icon-button color="primary" (click)="editTesting(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+          <form #solutionForm="ngForm" (ngSubmit)="addSolutionTesting(solutionForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="solutionTestingStatus" [(ngModel)]="implementation.solutionTestingStatus" required>
+                <mat-option value="In Progress">In Progress</mat-option>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Not Completed">Not Completed</mat-option>
+                <mat-option value="None">None</mat-option>
+                  </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput name="remarksTesting" [(ngModel)]="implementation.remarksTesting"></textarea>
+          </mat-form-field> -->
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="solutionTestingDatePicker" (dateChange)="setsolutionTestingDatePicker($event)" name="solutionTestingDate"
+                [(ngModel)]="implementation.solutionTestingDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="solutionTestingDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #solutionTestingDatePicker></mat-datepicker>
+            </mat-form-field>
+                              <button class="button" mat-button type="submit" [disabled]="!solutionForm.form.valid">
+                      <mat-icon *ngIf="isEditingTesting">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingTesting">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingTesting ? 'Edit' : 'Update' }}
+                    </button> 
+        
+        </form>
+        </mat-card>
+  
+              <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Progress to date</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div *ngFor="let implementation of ProgressToDates">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{implementation.progressStatus}}</p>  
+              <!-- <p>Remarks : {{implementation.remarksProgress}}</p> -->
+              <p>Date : {{implementation.progressDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+  
+                                <button mat-icon-button color="primary" (click)="editProgress(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+          <form #toDateForm="ngForm" (ngSubmit)="addProgressToDate(toDateForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="progressStatus" [(ngModel)]="implementation.progressStatus" required>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Scheduled">Scheduled</mat-option>
+                <mat-option value="None">None</mat-option>
+                  </mat-select>
+          </mat-form-field>
+  
+          <!-- <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput name="remarksProgress" [(ngModel)]="implementation.remarksProgress"></textarea>
+          </mat-form-field> -->
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="progressDatePicker" (dateChange)="setprogressDatePicker($event)" name="progressDate"
+                [(ngModel)]="implementation.progressDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="progressDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #progressDatePicker></mat-datepicker>
+            </mat-form-field>
+                              <button class="button" mat-button type="submit" [disabled]="!toDateForm.form.valid">
+                      <mat-icon *ngIf="isEditingProgress">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingProgress">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingProgress ? 'Edit' : 'Update' }}
+                    </button> 
+        
+        </form>
+        </mat-card>
+  
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Close-out / Hand-over Report</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="mt-3">
+    
+            <div *ngFor="let implementation of CloseOutHandOverReports">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{implementation.closeOutStatus}}</p>  
+              <!-- <p>Remarks : {{implementation.remarksClose}}</p> -->
+              <p>Date : {{implementation.closeoutDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+    
+                                <button mat-icon-button color="primary" (click)="editClose(implementation)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+    
+          <form #closeOutForm="ngForm" (ngSubmit)="addCloseOut(closeOutForm)">
+        
+              <!--Hidden Start-->
+              <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+              <!--Hidden End-->
+    
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select name="closeOutStatus" [(ngModel)]="closeOut.closeOutStatus" required>
+                  <mat-option value="Completed">Completed</mat-option>
+                  <mat-option value="Not Completed">Not Completed</mat-option>
+                  <!-- <mat-option value="None">None</mat-option> -->
+                    </mat-select>
+            </mat-form-field>
+  
+            <!-- <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput name="remarksClose" [(ngModel)]="implementation.remarksClose"></textarea>
+            </mat-form-field> -->
+          
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="closeoutDatePicker" (dateChange)="setcloseoutDatePicker($event)" name="closeoutDate"
+                  [(ngModel)]="closeOut.closeoutDate" required>
+                <mat-datepicker-toggle matSuffix [for]="closeoutDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #closeoutDatePicker></mat-datepicker>
+              </mat-form-field>
+                                <button class="button" mat-button type="submit" [disabled]="!closeOutForm.form.valid">
+                      <mat-icon *ngIf="isEditingClose">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingClose">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingClose ? 'Edit' : 'Update' }}
+                    </button> 
+          
+          </form>
+    
+        </mat-card>
+  
+      </div>
+  
+  </mat-tab>
+  
+  
+  <mat-tab label="View Challenges">
+    <div class="card-container mt-3">
+      <mat-card class="w-25">
+        <img src="../../../../../assets/images/challenge.png" alt="First Card Image" class="card-image">
+      </mat-card>
+    <mat-card class="w-50">
+      <mat-card-header>
+        <mat-card-title>Challenges</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mt-3 challenge">
+  
+        <div  *ngFor="let challenge of Challenges">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+          <p><b>Challenge</b> : {{challenge.challengesStatus}}</p>  
+          <p>Date : {{challenge.challengesDate | date:'dd-MM-yyyy'}}</p>
+       
+      </div>
+    </div>
+    <hr class="line">
+  </div>
+  </mat-card-content>
+  
+      </mat-card>
+      <mat-card class="w-25">
+        <img src="../../../../../assets/images/impossible.png" alt="First Card Image" class="card-image">
+      </mat-card>
+    </div>
+  
+  </mat-tab> 
+    </mat-tab-group>
+  </div>
+  
+  <br>
+  <div class="next-previous">
+    <button mat-stroked-button color="primary" class="custom-button" (click)="previousTab()">
+      <mat-icon>keyboard_arrow_left</mat-icon> Previous
+    </button>
+    
+    <button mat-stroked-button color="primary" class="custom-button" (click)="nextTab()">
+      Next<mat-icon>keyboard_arrow_right</mat-icon> 
+    </button>
+  </div>
+  
+    

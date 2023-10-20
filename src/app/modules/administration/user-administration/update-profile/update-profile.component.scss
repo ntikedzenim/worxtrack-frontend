@@ -1,0 +1,82 @@
+:host ::ng-deep .mat-raised-button{
+  padding-top: 0vh;
+  padding-bottom: 0vh;
+  color: rgb(235,136,14);
+ // background:rgb(205,127,50) !important;//-- bronze 
+//  color:rgb(192,192,192) !important;//-- silver 
+  margin-left :5px ;
+  width:30%;
+}
+  
+  mat-panel-title{
+    color: #c0c0c0 !important;
+  }
+  
+  mat-panel-title{
+    color: #808000 !important;
+    font: 1.1em sans-serif;
+  }
+  
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.6em 0px !important;}
+  ::ng-deep .mat-form-field-label-wrapper { top: -0.5em; }
+  
+  ::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-
+   { transform: translateY(-1.1em) scale(.75); width: 133.33333%;}
+  
+  ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick
+  { height: 36px; }
+  ::ng-deep .mat-form-field-flex > .mat-form-field-infix { border-top: 5px solid transparent; }
+
+  span.material-icons {
+    height: 24px !important;
+    width: auto !important;
+  }
+  span.material-icons:not(:last-child) {
+    margin-right: 8px !important;    
+  }
+  .card span.material-icons {
+    color: whitesmoke !important;  
+  }
+  .card h6{
+   color:  whitesmoke !important;
+   font-size: 1em;
+  }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    margin-top: 5px;
+  }
+  .card {
+    border-radius: 4px;
+    border: 1px solid #eee;
+    background-color: #fafafa;
+    height: 40px;
+    width: 200px;
+    margin: 5px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+    background-color: rgb(235,136,14);
+  }
+  .card-container .card:not(:last-child) {
+    margin-right: 0;
+  }
+  .card.card-small {
+    height: 16px;
+    width: 168px;
+  }
+  .card-container .card:not(.highlight-card) {
+    cursor: pointer;
+  }
+  .card-container .card:not(.highlight-card):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
+  }
+  .card-container .card:not(.highlight-card):hover .material-icons path {
+    fill: rgb(105, 103, 103);
+  }

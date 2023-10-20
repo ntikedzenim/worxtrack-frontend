@@ -1,0 +1,93 @@
+<div class="whole-page">
+    <!-- Your existing content here -->
+    <!-- <img src="assets/images/outside.jpg"/> -->
+</div>
+
+    
+<mat-toolbar-row class="row marleft">
+       
+    <span class="flex"> <img class="logo-container" src="assets/images/dpw_coatofarms.png"></span>
+
+    <span class="flex" > 
+        <img class="logo-container_right" src="assets/images/worxtrack.png"> 
+    </span>
+</mat-toolbar-row>
+
+<div class="loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div> 
+
+<div class="row marleft">
+
+    <div class="login-wrap">
+
+        <div class="col m12 s12 form-background mat-elevation-z4">
+
+            <div class="login-header">
+                <span> Login </span>
+            </div>
+
+            <div class="clearContent"></div>
+
+            <div class="login-form">
+
+                <form [formGroup]="signinForm" (ngSubmit)="loginUser()">
+
+                    <mat-form-field appearance="fill" class="text-field">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="Username [Name space Surname]" type="text"
+                            formControlName="username" autocomplete="off" required>
+                        <mat-error>
+                            <span
+                                *ngIf="!signinForm.get('username').value && signinForm.get('username').touched"></span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="text-field orange-placeholder">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password [Similar to Windows Account Password]" [type]="changetype? 'password': 'text'"
+                            formControlName="password" autocomplete="off"  required>
+                            <span class="eye-icon-container" (click)="viewpass()">
+                                <i [ngClass]="visible ? 'fa fa-eye' : 'fa fa-eye-slash'"></i>
+                            </span>                            
+                        <mat-error>
+                            <span
+                                *ngIf="!signinForm.get('password').value && signinForm.get('password').touched"></span>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div class="buttons">
+
+                        <div class="login">
+                            <button mat-raised-button [disabled]="signinForm.invalid">
+                                <i class="fa fa-sign-in"></i> &nbsp;&nbsp; Login
+                            </button>
+                        </div>
+                        
+        
+
+                    </div>
+
+                        <h6  style="color: black;" >Enquiries</h6>
+
+                        <div>
+                            <span><mat-icon>phone</mat-icon></span>
+                            <span>&nbsp;&nbsp;012 406 1620</span>  <br/>
+                            <span><mat-icon>email</mat-icon></span>
+                            <span>&nbsp;&nbsp;worx4usupport@dpw.gov.za</span>
+                          </div>
+                       
+
+                    <div class="clearContent"></div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="clearContent"></div>
+    <div class="clearContent"></div>
+
+</div>

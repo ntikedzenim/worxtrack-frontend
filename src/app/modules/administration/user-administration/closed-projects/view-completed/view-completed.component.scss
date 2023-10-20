@@ -1,0 +1,61 @@
+mat-label {
+    color: #000;
+    font-size: 16px;
+  }
+
+  mat-form-field input {
+    color: #000;
+    font-size: 16px;
+  }
+
+  .download-icon {
+    cursor: pointer;
+    color: rgb(235, 136, 14);
+  }
+
+  .custom-button {
+    width: 150px; /* Adjust the width to your preference */
+    margin-right: 10px; /* Adjust the margin to create space between buttons */
+  }
+  
+  .custom-button:hover {
+    background-color: #f1f1f1; /* Change to your desired hover background color */
+    color: #000; /* Change to your desired hover text color */
+    margin-right: 10px; /* Adjust the margin to create space between buttons *
+    /* Add any other styles you want to apply on hover */
+  }
+  
+/* Style for the table */
+table {
+  width: 50%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  font-size: larger;
+}
+
+/* Style for the Download and Delete icons */
+mat-icon {
+  cursor: pointer;
+  font-size: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.download-icon {
+  color: blue; /* Change the color for the Download icon */
+}
+
+.delete-icon {
+  color: red; /* Change the color for the Delete icon */
+}
+
+/* Set the width for the last two columns */
+td:nth-last-child(2), th:nth-last-child(2),
+td:last-child, th:last-child {
+  width: 10%;
+}

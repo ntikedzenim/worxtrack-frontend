@@ -1,0 +1,15 @@
+<h2 class="search-heading">Search Users</h2>
+
+<form class="search-form" (ngSubmit)="searchUsersByName(fullName.value)">
+  <input type="text" name="fullName" #fullName placeholder="Enter full name" required (keyup)="searchUsersByName(fullName.value)">
+  <button type="submit">Search</button>
+</form>
+
+<div *ngIf="adDetails.length > 0">
+  <h6>Search Results (Click on the name to select):</h6>
+  <ul>
+    <li *ngFor="let user of adDetails" (click)="linkAdDetails(user)">
+      {{ user.displayName }}
+    </li>
+  </ul>
+</div>

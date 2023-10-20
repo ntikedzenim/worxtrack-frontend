@@ -1,0 +1,85 @@
+<div class="row marleft">
+
+    <div class="loading-shade" *ngIf="isLoadingResults">
+        <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <div class="col m12 s12 mat-elevation-z8">
+
+        <div class="col m12 s12 breadcrumb mat-elevation-z8 page-heading">
+            <span> Update User Profile </span>
+        </div>
+
+        <form [formGroup]="myGroup" (ngSubmit)="updateADPersalLink(myGroup.value)">
+            <!-- Hidden -->
+            <!--Hidden End-->
+            <div class="clearContent"></div>
+
+            <!-- Search Persal-->
+            <div class="col m12 s12">
+                <div> <span class="sub-header-page">Search for Employee</span></div>
+                <mat-form-field class="half-width">
+                    <input (keyup)="onKeyEmployee($event.target.value)" type="text" matInput
+                        placeholder="Search for Username" formControlName="employee" [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayEmployee"
+                        (optionSelected)="onChangeEmployee($event)">
+                        <mat-option *ngFor="let employee of listEmployees" [value]="employee">
+                            {{employee.username}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+
+            <div class="col m12 s12">
+                <mat-form-field class="half-width" appearance="">
+                    <mat-label>PERSAL Number</mat-label>
+                    <input matInput type="text" placeholder="PERSAL-Number" formControlName="persal_number">
+                </mat-form-field>
+                <mat-form-field class="half-width" appearance="">
+                    <mat-label>Username</mat-label>
+                    <input matInput type="text" placeholder="Username" formControlName="username">
+                </mat-form-field>
+                <mat-form-field class="half-width" appearance=""> 
+                    <mat-label>Email Address</mat-label>
+                    <input matInput type="text" placeholder="Email Address" formControlName="email_address">
+                </mat-form-field>
+                <mat-form-field class="half-width" appearance="">
+                    <mat-label>Telephone No</mat-label>
+                    <input matInput type="text" placeholder="Telephone No" formControlName="telephone_number">
+                </mat-form-field>
+                <!-- Role-->
+                <mat-form-field class="half-width" appearance="">
+                    <mat-label>Role</mat-label>
+                    <mat-select formControlName="role_id" placeholder="Select Role" appearance="">
+                        <mat-option *ngFor="let role_id of roles" [value]="role_id.role_id">
+                            {{ role_id.role_name }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+            </div>
+            <!--User Details End-->
+            <div class="clearContent">
+                <span class="success"> {{massage}}</span>
+            </div>
+
+            <div class="card-container">
+                <button type="submit" color="primary" class="card">
+                    <span class="material-icons" width="24" height="24" viewBox="0 0 24 24">save</span>
+                    <h6>Save</h6>
+                </button> 
+
+                <button class="card" (click)="resetForm()" color="accent">
+                    <span class="material-icons" width="24" height="24" viewBox="0 0 24 24">cancel</span>
+                    <h6>Clear</h6>
+                </button>
+            </div>
+
+            <div class="clearContent"></div>
+
+        </form>
+
+
+    </div>
+
+</div>

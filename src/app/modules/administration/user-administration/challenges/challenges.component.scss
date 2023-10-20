@@ -1,0 +1,72 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  mat-card {
+    flex: 1;
+    margin-right: 10px;
+    width: 25%;
+  }
+  
+  mat-card-content {
+    height: 200px;
+    overflow: auto;
+  }
+  
+  form {
+    height: 250px;
+    overflow: auto;
+  }
+  
+  .button {
+    width: 150px; 
+    margin-right: 10px; 
+    border-radius: 5px;
+    border: 1px solid rgb(233, 226, 218);
+  }
+  
+  mat-icon {
+    color: rgb(235, 136, 14);
+  }
+  
+  .custom-button {
+    width: 150px; /* Adjust the width to your preference */
+    margin-right: 10px; /* Adjust the margin to create space between buttons */
+  }
+  
+  .custom-button:hover {
+    background-color: #f1f1f1; /* Change to your desired hover background color */
+    color: #000; /* Change to your desired hover text color */
+    margin-right: 10px; /* Adjust the margin to create space between buttons *
+    /* Add any other styles you want to apply on hover */
+  }
+  
+  .line{
+    border: none;
+    border-top: 3px solid rgb(235, 136, 14);
+  }
+  
+  .status-in-approved {
+    background-color: green;
+    color: #000;
+    padding-left: 20px;
+    font-size: medium;
+    // font-weight: bold;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  
+  .tab-group-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  button {
+    margin: 5px;
+  }
+  

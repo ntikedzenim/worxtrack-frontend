@@ -1,0 +1,1147 @@
+
+  <div class="clearContent"></div><div class="clearContent"></div><div class="clearContent"></div>
+  
+
+  <div class="col m12 s12 mat-elevation-z8">
+
+<h5 class="header">
+    <span class="project-title"><button class="custom-button" mat-stroked-button color="primary" routerLink="/project/update-milestone"><mat-icon>keyboard_arrow_left</mat-icon> &nbsp; Back</button>Procurement Milestone: {{project.projectTitle}}</span>
+    <span class="estimated-value" > <button class="button" (click)="openDialog(project.ptsRef)" mat-button><mat-icon>add</mat-icon> &nbsp; Challenges</button> Estimated Value: <span style="color: red;">{{ project.estimatedValue | currency: 'ZAR': 'symbol-narrow': '1.2-2' }}</span></span>
+  </h5>
+  
+  <div class="tab-group-container">
+  
+    <mat-tab-group  [selectedIndex]="activeTabIndex">
+      <mat-tab label="SCM Practitioner - ToR Endorsed" >
+  
+          <div class="card-container mt-3">
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>SCM Practitioner</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+                <div *ngFor="let procurement of ScmPractitioners" >
+                  <div class="custom-card-content">
+                  <div class="content">
+                    <p>Name: {{procurement.scmPractitionerStatus}}</p>
+                    <p>Date: {{procurement.scmPractitionerDate | date:'dd-MM-yyyy' }}</p>
+                  </div>
+                  <div>
+                    <button mat-icon-button color="primary" (click)="editMilestone(procurement)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <hr class="line">
+              </div>
+              </mat-card-content>
+              
+              
+              
+  
+              <form #procurementForm="ngForm" (ngSubmit)="addSCMPractitioner(procurementForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+             
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>SCM Practitioner</mat-label>
+                  <input matInput placeholder="SCM Practitioner" name="scmPractitionerStatus" [(ngModel)]="procurement.scmPractitionerStatus" (click)="openSearchDialog()" readonly required>
+                  <mat-icon matSuffix (click)="openSearchDialog()">search</mat-icon>
+                </mat-form-field> 
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="scmDatePicker" (dateChange)="setScmPractitionerDateDatePicker($event)" name="scmPractitionerDate"
+                  [(ngModel)]="procurement.scmPractitionerDate"  required>
+                  <mat-datepicker-toggle matSuffix [for]="scmDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #scmDatePicker></mat-datepicker>
+                </mat-form-field>
+  
+                <button class="button" mat-button type="submit" [disabled]="!procurementForm.form.valid">
+                  <mat-icon *ngIf="isEditingBSCFormation">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                  <mat-icon *ngIf="!isEditing">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                  {{ isEditing ? 'Edit' : 'Update' }}
+                </button>
+            
+            </form>
+            </mat-card>
+  
+             
+  
+                <mat-card class="w-25" [ngClass]="{ 'gray-card': isScmPractitionerStatusEmpty() }">
+                  <mat-card-header>
+                    <mat-card-title>PA25.1 BSC Formation</mat-card-title>
+                  </mat-card-header>
+                
+                  <mat-card-content class="mt-3">
+                    <div *ngFor="let procurement of BscFormations">
+                      <div class="custom-card-content">
+                        <div class="content">
+                          <p>Status: {{procurement.bscFormationStatus}}</p>
+                          <p>Date: {{procurement.bscFormationDate | date:'dd-MM-yyyy' }}</p>
+                        </div>
+                        <button mat-icon-button color="primary" (click)="editBSCFormation(procurement)">
+                          <mat-icon>edit</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="line">
+                    </div>
+                  </mat-card-content>
+                
+                  <form #BscFormationForm="ngForm" (ngSubmit)="addBSCFormation(BscFormationForm)">
+                    <!-- Hidden Start -->
+                    <input type="hidden" [(ngModel)]="project.ptsRef" name="ptsRef">
+                    <!-- Hidden End -->
+                
+                    <mat-form-field class="full-width" appearance="outline">
+                      <mat-label>Status</mat-label>
+                      <mat-select name="bscFormationStatus" [(ngModel)]="procurement.bscFormationStatus" required>
+                        <mat-option value="Approved">Approved</mat-option>
+                        <mat-option value="Referred Back">Referred Back</mat-option>
+                        <mat-option value="Submited">Submited</mat-option>
+                        <mat-option value="Re-Submitted">Re-Submitted</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                
+                    <mat-form-field class="full-width" appearance="outline">
+                      <mat-label>Date</mat-label>
+                      <input matInput [matDatepicker]="awardStartDatePicker" (dateChange)="setBscFormationDatePicker($event)" name="bscFormationDate"
+                        [(ngModel)]="procurement.bscFormationDate" required>
+                      <mat-datepicker-toggle matSuffix [for]="awardStartDatePicker"></mat-datepicker-toggle>
+                      <mat-datepicker #awardStartDatePicker></mat-datepicker>
+                    </mat-form-field>
+                
+                    <button class="button" mat-button type="submit" [disabled]="!BscFormationForm.form.valid">
+                      <mat-icon *ngIf="isEditingBSCFormation">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                      <mat-icon *ngIf="!isEditingBSCFormation">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                      {{ isEditingBSCFormation ? 'Edit' : 'Update' }}
+                    </button>
+                  </form>
+                </mat-card>
+                
+  
+                
+            <mat-card class="w-25" [ngClass]="{ 'gray-card': isBscFormationNotApproved(procurement) }">
+              <mat-card-header>
+                <mat-card-title>BSC Meeting</mat-card-title>
+              </mat-card-header>
+              <mat-card-content class="mt-3">
+                <div *ngFor="let procurement of BscMeetings">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status: {{procurement.bscMeetingStatus}}</p>
+                  <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                  <p>Date: {{procurement.bscMeetingDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <button mat-icon-button color="primary" (click)="editBSCMeeting(procurement)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <hr class="line">
+            </div>
+  
+              </mat-card-content>
+              
+              <form #BscMeetingForm="ngForm" (ngSubmit)="addBSCMeeting(BscMeetingForm)">
+                <!-- Hidden Start -->
+                <input type="hidden" [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!-- Hidden End -->
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="bscMeetingStatus" [(ngModel)]="procurement.bscMeetingStatus" required>
+                    <mat-option value="Met">Met</mat-option>
+                    <mat-option value="Not Met">Not Met</mat-option>
+                    <mat-option value="Scheduled">Scheduled</mat-option>
+                  </mat-select>
+                </mat-form-field>
+  
+                <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.bscMeetingStatus === 'Not Met'">
+                  <mat-label>Remarks</mat-label>
+                  <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+                </mat-form-field>
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="bscMeetingDatePicker" (dateChange)="setbscMeetingDatePicker($event)" name="bscMeetingDate"
+                    [(ngModel)]="procurement.bscMeetingDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="bscMeetingDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #bscMeetingDatePicker></mat-datepicker>
+                </mat-form-field>
+            
+            
+                <button class="button" mat-button type="submit" [disabled]="!BscMeetingForm.form.valid">
+                  <mat-icon *ngIf="isEditingBSCMeeting">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                  <mat-icon *ngIf="!isEditingBSCMeeting">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                  {{ isEditingBSCMeeting ? 'Edit' : 'Update' }}
+                </button>
+              </form>
+            </mat-card>
+            
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Terms of Reference</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div  *ngFor="let procurement of ToREndorseds">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{procurement.torEndorsedStatus}}</p>  
+                  <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                  <p>Date : {{procurement.torEndorsedDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <button mat-icon-button color="primary" (click)="editTOR(procurement)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <hr class="line">
+            </div>
+  
+              </mat-card-content>
+  
+              <form #ToRForm="ngForm" (ngSubmit)="addToREndorsed(ToRForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="torEndorsedStatus" [(ngModel)]="procurement.torEndorsedStatus" required>
+                      <mat-option value="Draft">Draft</mat-option>
+                      <mat-option value="Referred Back">Referred Back</mat-option>
+                      <mat-option value="Corrected">Corrected</mat-option>
+                      <mat-option value="Not Completed">Not Completed</mat-option>
+                      <mat-option value="Completed">Completed</mat-option>
+                      
+                  </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.torEndorsedStatus === 'Not Completed'">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+              </mat-form-field>
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="torEndorsedDatePicker" (dateChange)="settorEndorsedDatePicker($event)" name="torEndorsedDate"
+                    [(ngModel)]="procurement.torEndorsedDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="torEndorsedDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #torEndorsedDatePicker></mat-datepicker>
+                </mat-form-field>
+                <button class="button" mat-button type="submit" [disabled]="!ToRForm.form.valid">
+                  <mat-icon *ngIf="isEditingTOR">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                  <mat-icon *ngIf="!isEditingTOR">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                  {{ isEditingTOR ? 'Edit' : 'Update' }}
+                </button>
+            
+            </form>
+            </mat-card>
+  
+          </div>
+  
+      </mat-tab>
+  
+      <mat-tab label="Procurement Strategy - Feedback from NBAC" >
+  
+          <div class="card-container mt-3">
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Procurement Strategy</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div  *ngFor="let procurement of ProcurementStrategies">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{procurement.procurementStrategyStatus}}</p> 
+                  <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p> 
+                  <p>Date : {{procurement.procurementStrategyDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <button mat-icon-button color="primary" (click)="editPS(procurement)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <hr class="line">
+            </div>
+  
+              </mat-card-content>
+  
+              <form #strategyForm="ngForm" (ngSubmit)="addProcurementStrategy(strategyForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="procurementStrategyStatus" [(ngModel)]="procurement.procurementStrategyStatus" required>
+                    <mat-option value="Draft">Draft</mat-option>
+                    <mat-option value="Referred Back">Referred Back</mat-option>
+                    <mat-option value="Corrected">Corrected</mat-option>
+                    <mat-option value="Not Completed">Not Completed</mat-option>
+                    <mat-option value="Completed">Completed</mat-option>
+                  </mat-select>
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.procurementStrategyStatus === 'Not Completed'">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+              </mat-form-field>
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="procurementStrategyPicker" (dateChange)="setprocurementStrategyDatePicker($event)" name="procurementStrategyDate"
+                    [(ngModel)]="procurement.procurementStrategyDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="procurementStrategyPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #procurementStrategyPicker></mat-datepicker>
+                </mat-form-field>
+                <button class="button" mat-button type="submit" [disabled]="!strategyForm.form.valid">
+                  <mat-icon *ngIf="isEditingPS">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                  <mat-icon *ngIf="!isEditingPS">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                  {{ isEditingPS ? 'Edit' : 'Update' }}
+                </button>
+            
+            </form>
+            </mat-card>
+  
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Budget Confirmation</mat-card-title>
+              </mat-card-header>
+  
+              <mat-card-content class="mt-3">
+  
+                <div  *ngFor="let procurement of BudgetConfirmations">
+                  <div class="custom-card-content">
+                    <div class="content">
+                  <p>Status : {{procurement.budgetConfirmationStatus}}</p>  
+                  <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                  <p>Date : {{procurement.budgetConfirmationDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+                <button mat-icon-button color="primary" (click)="editBC(procurement)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </div>
+              <hr class="line">
+            </div>
+  
+              </mat-card-content>
+  
+              <form #budgetForm="ngForm" (ngSubmit)="addBudgetConfirmation(budgetForm)">
+            
+                <!--Hidden Start-->
+                <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+                <!--Hidden End-->
+  
+  
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Status</mat-label>
+                  <mat-select name="budgetConfirmationStatus" [(ngModel)]="procurement.budgetConfirmationStatus" required>
+                      <mat-option value="Confirmed">Confirmed</mat-option>
+                      <mat-option value="Not Confirmed">Not Confirmed</mat-option>
+                      <mat-option value="No Budget">No Budget</mat-option>
+                  </mat-select> 
+              </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.budgetConfirmationStatus === 'Not Confirmed'">
+                <mat-label>Remarks</mat-label>
+                <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+              </mat-form-field>
+            
+                <mat-form-field class="full-width" appearance="outline">
+                  <mat-label>Date</mat-label>
+                  <input matInput [matDatepicker]="budgetConfirmationDatePicker" (dateChange)="setResubmittedNbacDatePicker($event)" name="budgetConfirmationDate"
+                    [(ngModel)]="procurement.budgetConfirmationDate" required>
+                  <mat-datepicker-toggle matSuffix [for]="budgetConfirmationDatePicker"></mat-datepicker-toggle>
+                  <mat-datepicker #budgetConfirmationDatePicker></mat-datepicker>
+                </mat-form-field>
+                <button class="button" mat-button type="submit" [disabled]="!budgetForm.form.valid">
+                  <mat-icon *ngIf="isEditingBC">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                  <mat-icon *ngIf="!isEditingBC">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                  {{ isEditingBC ? 'Edit' : 'Update' }}
+                </button>
+            
+            </form>
+            </mat-card>
+  
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Submission to NBAC & SCM</mat-card-title>
+            </mat-card-header>
+  
+            <mat-card-content class="mt-3">
+  
+              <div  *ngFor="let procurement of SubmittedNBACS">
+                <div class="custom-card-content">
+                  <div class="content">
+                <p>Status : {{procurement.submittedNbacStatus}}</p> 
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p> 
+                <p>Date : {{procurement.submittedNbacDate | date:'dd-MM-yyyy'}}</p>
+              </div>
+              <button mat-icon-button color="primary" (click)="editSCMNBAC(procurement)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            <hr class="line">
+          </div>
+  
+            </mat-card-content>
+            
+            <form #addSubmittedForm="ngForm" (ngSubmit)="addSubmittedNBAC(addSubmittedForm)">
+  
+              <!--Hidden Start-->
+              <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+              <!--Hidden End-->
+  
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select name="submittedNbacStatus" [(ngModel)]="procurement.submittedNbacStatus" required>
+                    <mat-option value="Submitted to SCM">Submitted to SCM</mat-option>
+                    <mat-option value="Resubmitted to SCM">Resubmitted to SCM</mat-option>
+                    <mat-option value="Submitted to NBAC">Submitted to NBAC</mat-option>
+                    <mat-option value="Resubmitted to NBAC">Resubmitted to NBAC</mat-option>
+                    <mat-option value="Not Submitted">Not Submitted</mat-option>
+                    
+                </mat-select>
+            </mat-form-field>
+  
+            <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.submittedNbacStatus === 'Not Submitted'">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+            </mat-form-field>
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="submittedNbacDatePicker" (dateChange)="setsubmittedNbacDatePicker($event)" name="submittedNbacDate"
+                  [(ngModel)]="procurement.submittedNbacDate" required>
+                <mat-datepicker-toggle matSuffix [for]="submittedNbacDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #submittedNbacDatePicker></mat-datepicker>
+              </mat-form-field>
+              <button class="button" mat-button type="submit" [disabled]="!addSubmittedForm.form.valid">
+                <mat-icon *ngIf="isEditingSCMNBAC">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                <mat-icon *ngIf="!isEditingSCMNBAC">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                {{ isEditingSCMNBAC ? 'Edit' : 'Update' }}
+              </button>
+  
+          </form>
+          </mat-card>
+  
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>PA12 Feedback from the NBAC</mat-card-title>
+            </mat-card-header>
+  
+            <mat-card-content class="mt-3">
+  
+              <div  *ngFor="let procurement of FeedbackNBACS">
+                <div class="custom-card-content">
+                  <div class="content">
+                <p>Status : {{procurement.feedbackNBACStatus}}</p>  
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                <p>Date : {{procurement.feedbackNBACDate | date:'dd-MM-yyyy'}}</p>
+              </div>
+              <button mat-icon-button color="primary" (click)="editFNBAC(procurement)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+            <hr class="line">
+          </div>
+  
+            </mat-card-content>
+  
+            <form #FeedbackNBACForm="ngForm" (ngSubmit)="addFeedbackNBAC(FeedbackNBACForm)">
+          
+              <!--Hidden Start-->
+              <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+              <!--Hidden End-->
+  
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select name="feedbackNBACStatus" [(ngModel)]="procurement.feedbackNBACStatus" required>
+                    <mat-option value="Approved">Approved</mat-option>
+                    <mat-option value="Referred Back">Referred Back</mat-option>
+                    <mat-option value="Not Approved">Not Approved</mat-option>
+                </mat-select>
+            </mat-form-field>
+  
+            <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.feedbackNBACStatus === 'Not Approved'">
+              <mat-label>Remarks</mat-label>
+              <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+            </mat-form-field>
+          
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="feedbackNBACDatePicker" (dateChange)="setfeedbackNBACDatePicker($event)" name="feedbackNBACDate"
+                  [(ngModel)]="procurement.feedbackNBACDate" required>
+                <mat-datepicker-toggle matSuffix [for]="feedbackNBACDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #feedbackNBACDatePicker></mat-datepicker>
+              </mat-form-field>
+              <button class="button" mat-button type="submit" [disabled]="!FeedbackNBACForm.form.valid">
+                <mat-icon *ngIf="isEditingFNBAC">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+                <mat-icon *ngIf="!isEditingFNBAC">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+                {{ isEditingFNBAC ? 'Edit' : 'Update' }}
+              </button>
+          
+          </form>
+          </mat-card>
+  
+          </div>
+  
+      </mat-tab>
+  
+  
+    <mat-tab label="Tender Advertised - BEC Formation" >
+  
+      <div class="card-container mt-3">
+  
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Tender Advertised</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div  *ngFor="let procurement of TenderAdvertiseds">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{procurement.tenderAdvertisedStatus}}</p>  
+              <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+              <p>Date : {{procurement.tenderAdvertisedDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+            <button mat-icon-button color="primary" (click)="editAdvertised(procurement)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <hr class="line">
+        </div>
+  
+        
+        
+  
+          </mat-card-content>
+          <form #advertForm="ngForm" (ngSubmit)="addTenderAdvertised(advertForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="tenderAdvertisedStatus" [(ngModel)]="procurement.tenderAdvertisedStatus" required>
+                <mat-option value="Advertised">Advertised</mat-option>
+                <mat-option value="Not Advertised">Not Advertised</mat-option>
+                <mat-option value="Scheduled">Scheduled</mat-option>
+              </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.tenderAdvertisedStatus === 'Not Advertised'">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+          </mat-form-field>
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="tenderAdvertisedDatePicker" (dateChange)="settenderAdvertisedDatePicker($event)" name="tenderAdvertisedDate"
+                [(ngModel)]="procurement.tenderAdvertisedDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="tenderAdvertisedDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #tenderAdvertisedDatePicker></mat-datepicker>
+            </mat-form-field>
+            <button class="button" mat-button type="submit" [disabled]="!advertForm.form.valid">
+              <mat-icon *ngIf="isEditingAdvertised">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+              <mat-icon *ngIf="!isEditingAdvertised">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+              {{ isEditingAdvertised ? 'Edit' : 'Update' }}
+            </button> 
+        
+        </form>
+        </mat-card>
+  
+              <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Briefing Session</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div  *ngFor="let procurement of BriefingSessions">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{procurement.briefingSessionStatus}}</p>  
+              <p>Date : {{procurement.briefingSessionDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+            <button mat-icon-button color="primary" (click)="editBriefing(procurement)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <hr class="line">
+        </div>
+  
+          </mat-card-content>
+          <form #briefForm="ngForm" (ngSubmit)="addBriefingSession(briefForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="briefingSessionStatus" [(ngModel)]="procurement.briefingSessionStatus" required>
+                <mat-option value="Completed">Completed</mat-option>
+                <mat-option value="Scheduled">Scheduled</mat-option>
+                <mat-option value="None">None</mat-option>
+              </mat-select>
+          </mat-form-field>
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="briefingSessionDatePicker" (dateChange)="setbriefingSessionDatePicker($event)" name="briefingSessionDate"
+                [(ngModel)]="procurement.briefingSessionDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="briefingSessionDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #briefingSessionDatePicker></mat-datepicker>
+            </mat-form-field>
+            <button class="button" mat-button type="submit" [disabled]="!briefForm.form.valid">
+              <mat-icon *ngIf="isEditingBriefing">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+              <mat-icon *ngIf="!isEditingBriefing">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+              {{ isEditingBriefing ? 'Edit' : 'Update' }}
+            </button> 
+        
+        </form>
+        </mat-card>
+  
+              <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Tender Closure</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div  *ngFor="let procurement of TenderClosures">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{procurement.tenderClosureStatus}}</p>  
+              <p>Date : {{procurement.tenderClosureDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+            <button mat-icon-button color="primary" (click)="editClosure(procurement)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <hr class="line">
+        </div>
+  
+          </mat-card-content>
+          <form #closureForm="ngForm" (ngSubmit)="addTenderClosure(closureForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="tenderClosureStatus" [(ngModel)]="procurement.tenderClosureStatus" required>
+                <mat-option value="Closed">Closed</mat-option>
+                <mat-option value="Scheduled">Scheduled</mat-option>
+              </mat-select>
+          </mat-form-field>
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="tenderClosureDatePicker" (dateChange)="settenderClosureDatePicker($event)" name="tenderClosureDate"
+                [(ngModel)]="procurement.tenderClosureDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="tenderClosureDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #tenderClosureDatePicker></mat-datepicker>
+            </mat-form-field>
+            <button class="button" mat-button type="submit" [disabled]="!closureForm.form.valid">
+              <mat-icon *ngIf="isEditingClosure">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+              <mat-icon *ngIf="!isEditingClosure">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+              {{ isEditingClosure ? 'Edit' : 'Update' }}
+            </button>
+        
+        </form>
+        </mat-card>
+  
+              <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>PA25.2 BEC Formation</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+  
+            <div  *ngFor="let procurement of BecFormations">
+              <div class="custom-card-content">
+                <div class="content">
+              <p>Status : {{procurement.becFormationStatus}}</p>  
+              <p>Date : {{procurement.becFormationDate | date:'dd-MM-yyyy'}}</p>
+            </div>
+            <button mat-icon-button color="primary" (click)="editBECFormation(procurement)">
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+          <hr class="line">
+        </div>
+  
+          </mat-card-content>
+          <form #becRormationForm="ngForm" (ngSubmit)="addBECFormation(becRormationForm)">
+        
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="becFormationStatus" [(ngModel)]="procurement.becFormationStatus" required>
+                <mat-option value="Approved">Approved</mat-option>
+                <mat-option value="Referred Back">Referred Back</mat-option>
+                <mat-option value="Submited">Submited</mat-option>
+                <mat-option value="Re-Submitted">Re-Submitted</mat-option>
+              </mat-select> 
+          </mat-form-field>
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="becFormationDatePicker" (dateChange)="setbecFormationDatePicker($event)" name="becFormationDate"
+                [(ngModel)]="procurement.becFormationDate" required> 
+              <mat-datepicker-toggle matSuffix [for]="becFormationDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #becFormationDatePicker></mat-datepicker>
+            </mat-form-field>
+            <button class="button" mat-button type="submit" [disabled]="!becRormationForm.form.valid">
+              <mat-icon *ngIf="isEditingBECFormation">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+              <mat-icon *ngIf="!isEditingBECFormation">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+              {{ isEditingBECFormation ? 'Edit' : 'Update' }}
+            </button> 
+        
+        </form>
+        </mat-card>
+  
+      </div>
+  
+  </mat-tab>
+  
+  
+  
+  <mat-tab label="BEC Meeting - NBAC feedback on recommendation" >
+  
+    <div class="card-container mt-3">
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>BEC Meeting</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let procurement of BecMeetings">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{procurement.becMeetingStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.becMeetingDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editBECMeeting(procurement)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+  
+        <form #becMeetingForm="ngForm" (ngSubmit)="addBECMeeting(becMeetingForm)">
+      
+            <!--Hidden Start-->
+            <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+            <!--Hidden End-->
+  
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select name="becMeetingStatus" [(ngModel)]="procurement.becMeetingStatus" required>
+                  <mat-option value="Met">Met</mat-option>
+                  <mat-option value="Not Met">Not Met</mat-option>
+                  <mat-option value="Scheduled">Scheduled</mat-option>
+                  <!-- <mat-option value="Corrected">Corrected</mat-option> -->
+              </mat-select>
+          </mat-form-field>
+  
+          <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.becMeetingStatus === 'Not Met'">
+            <mat-label>Remarks</mat-label>
+            <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+          </mat-form-field>
+        
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Date</mat-label>
+              <input matInput [matDatepicker]="becMeetingDatePicker" (dateChange)="setbecMeetingDatePicker($event)" name="becMeetingDate"
+                [(ngModel)]="procurement.becMeetingDate" required>
+              <mat-datepicker-toggle matSuffix [for]="becMeetingDatePicker"></mat-datepicker-toggle>
+              <mat-datepicker #becMeetingDatePicker></mat-datepicker>
+            </mat-form-field>
+            <button class="button" mat-button type="submit" [disabled]="!becMeetingForm.form.valid">
+              <mat-icon *ngIf="isEditingBECMeeting">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+              <mat-icon *ngIf="!isEditingBECMeeting">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+              {{ isEditingBECMeeting ? 'Edit' : 'Update' }}
+            </button>
+        
+        </form>
+  
+      </mat-card>
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Reconfirmation of Budget</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let procurement of ReconfirmationOfBudgets">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{procurement.reconfirmationBudgetStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.reconfirmationBudgetDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editCB(procurement)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+        <form #budgetRecoForm="ngForm" (ngSubmit)="addReconfirmationOfBudget(budgetRecoForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select name="reconfirmationBudgetStatus" [(ngModel)]="procurement.reconfirmationBudgetStatus" required>
+              <mat-option value="Confirmed">Confirmed</mat-option>
+              <mat-option value="Not Confirmed">Not Confirmed</mat-option>
+              <mat-option value="No Budget">No Budget</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.reconfirmationBudgetStatus === 'Not Confirmed'">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="reconfirmationBudgetDatePicker" (dateChange)="setreconfirmationBudgetDatePicker($event)" name="reconfirmationBudgetDate"
+              [(ngModel)]="procurement.reconfirmationBudgetDate" required>
+            <mat-datepicker-toggle matSuffix [for]="reconfirmationBudgetDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #reconfirmationBudgetDatePicker></mat-datepicker>
+          </mat-form-field> 
+          <button class="button" mat-button type="submit" [disabled]="!budgetRecoForm.form.valid">
+            <mat-icon *ngIf="isEditingCB">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+            <mat-icon *ngIf="!isEditingCB">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+            {{ isEditingCB ? 'Edit' : 'Update' }}
+          </button> 
+      
+      </form>
+      </mat-card>
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Recommendation to NBAC & SCM</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let procurement of SubmitRecommendationNBACS">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{procurement.submitRecommendationNbacStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.submitRecommendationNbacDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editRNBAC(procurement)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+        <form #submitRecoForm="ngForm" (ngSubmit)="addSubmitRecommendationNBAC(submitRecoForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select name="submitRecommendationNbacStatus" [(ngModel)]="procurement.submitRecommendationNbacStatus" required>
+              <mat-option value="Submitted to SCM">Submitted to SCM</mat-option>
+              <mat-option value="Resubmitted to SCM">Resubmitted to SCM</mat-option>
+              <mat-option value="Not Submitted">Not Submitted</mat-option>
+              <mat-option value="Submitted to NBAC">Submitted to NBAC</mat-option>
+              <mat-option value="Resubmitted to NBAC">Resubmitted to NBAC</mat-option>
+  
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.submitRecommendationNbacStatus === 'Not Submitted'">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="submitRecommendationNbacDatePicker" (dateChange)="setsubmitRecommendationNbacDatePicker($event)" name="submitRecommendationNbacDate"
+              [(ngModel)]="procurement.submitRecommendationNbacDate" required> 
+            <mat-datepicker-toggle matSuffix [for]="submitRecommendationNbacDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #submitRecommendationNbacDatePicker></mat-datepicker>
+          </mat-form-field>
+          <button class="button" mat-button type="submit" [disabled]="!submitRecoForm.form.valid">
+            <mat-icon *ngIf="isEditingRNBAC">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+            <mat-icon *ngIf="!isEditingRNBAC">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+            {{ isEditingRNBAC ? 'Edit' : 'Update' }}
+          </button> 
+      
+      </form>
+      </mat-card>
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>PA12 NBAC Feedback</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let procurement of NbacFeedbackRecommendations">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{procurement.nbacFeedbackRecommendationStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.nbacFeedbackRecommendationDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editNBACFR(procurement)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+        <form #nbacFeedbackForm="ngForm" (ngSubmit)="addNBACFeedbackRecommendation(nbacFeedbackForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select name="nbacFeedbackRecommendationStatus" [(ngModel)]="procurement.nbacFeedbackRecommendationStatus" required>
+              <mat-option value="Approved">Approved</mat-option>
+              <mat-option value="Referred Back">Referred Back</mat-option>
+              <mat-option value="Not Approved">Not Approved</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.nbacFeedbackRecommendationStatus === 'Not Approved'">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="nbacFeedbackRecommendationDatePicker" (dateChange)="setnbacFeedbackRecommendationDatePicker($event)" name="nbacFeedbackRecommendationDate"
+              [(ngModel)]="procurement.nbacFeedbackRecommendationDate" required>
+            <mat-datepicker-toggle matSuffix [for]="nbacFeedbackRecommendationDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #nbacFeedbackRecommendationDatePicker></mat-datepicker>
+          </mat-form-field>
+          <button class="button" mat-button type="submit" [disabled]="!nbacFeedbackForm.form.valid">
+            <mat-icon *ngIf="isEditingNBACFR">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+            <mat-icon *ngIf="!isEditingNBACFR">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+            {{ isEditingNBACFR ? 'Edit' : 'Update' }}
+          </button> 
+      
+      </form>
+      </mat-card>
+  
+  
+  
+    </div>
+  
+  </mat-tab>
+  
+  
+  <mat-tab label="Submission to Legal Services - Letter of Award" >
+  
+    <div class="card-container mt-3">
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Submission to Legal Services</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let procurement of LegalServices">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{procurement.legalServicesStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.legalServicesDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editLegal(procurement)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+        <form #legalForm="ngForm" (ngSubmit)="addLegalServices(legalForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select name="legalServicesStatus" [(ngModel)]="procurement.legalServicesStatus" required>
+              <mat-option value="Submitted">Submitted</mat-option>
+              <mat-option value="Not Submitted">Not Submitted</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width" appearance="outline" *ngIf="procurement.legalServicesStatus === 'Not Submitted'">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput name="remarks" [(ngModel)]="procurement.remarks"></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="legalServicesDatePicker" (dateChange)="setlegalServicesDatePicker($event)" name="legalServicesDate"
+              [(ngModel)]="procurement.legalServicesDate" required>
+            <mat-datepicker-toggle matSuffix [for]="legalServicesDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #legalServicesDatePicker></mat-datepicker>
+          </mat-form-field>
+          <button class="button" mat-button type="submit" [disabled]="!legalForm.form.valid">
+            <mat-icon *ngIf="isEditingLegal">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+            <mat-icon *ngIf="!isEditingLegal">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+            {{ isEditingLegal ? 'Edit' : 'Update' }}
+          </button>
+      
+      </form>
+      </mat-card>
+  
+  
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Letter of Award</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="mt-3">
+  
+          <div  *ngFor="let award of AwardLetters">
+            <div class="custom-card-content">
+              <div class="content">
+            <p>Status : {{award.awardLetterStatus}}</p>  
+            <p *ngIf="award.remarks">Remarks: {{award.remarks}}</p>
+            <p>Date : {{award.awardLetterDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <button mat-icon-button color="primary" (click)="editAward(award)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <hr class="line">
+      </div>
+  
+        </mat-card-content>
+        <form #awardForm="ngForm" (ngSubmit)="addWard(awardForm)">
+      
+          <!--Hidden Start-->
+          <input type="hidden"  [(ngModel)]="project.ptsRef" name="ptsRef">
+          <!--Hidden End-->
+  
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select name="awardLetterStatus" [(ngModel)]="award.awardLetterStatus" required>
+              <mat-option value="Issued">Issued</mat-option>
+              <mat-option value="Not issued">Not issued</mat-option>
+            </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width" appearance="outline" *ngIf="award.awardLetterStatus === 'Not issued'">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput name="remarks" [(ngModel)]="award.remarks"></textarea>
+        </mat-form-field>
+      
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="awardLetterDatePicker" (dateChange)="setawardLetterDatePicker($event)" name="awardLetterDate"
+              [(ngModel)]="award.awardLetterDate" required> 
+            <mat-datepicker-toggle matSuffix [for]="awardLetterDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #awardLetterDatePicker></mat-datepicker>
+          </mat-form-field>
+          <button class="button" mat-button type="submit" [disabled]="!awardForm.form.valid">
+            <mat-icon *ngIf="isEditingAward">edit &nbsp;&nbsp;</mat-icon> <!-- Icon for editing -->
+            <mat-icon *ngIf="!isEditingAward">update &nbsp;&nbsp;</mat-icon> <!-- Icon for updating -->
+            {{ isEditingAward ? 'Edit' : 'Update' }}
+          </button>
+  
+      </form>
+      </mat-card>
+  
+  
+  
+      <mat-card class="w-25"></mat-card>
+      <mat-card class="w-25"></mat-card>
+  
+  
+  
+    </div>
+  
+  </mat-tab>
+  
+  
+  
+  <mat-tab label="View Challenges">
+    <div class="card-container mt-3">
+      <mat-card class="w-25">
+        <img src="../../../../../../assets/images/challenge.png" alt="First Card Image" class="card-image">
+      </mat-card>
+    <mat-card class="w-50">
+      <mat-card-header>
+        <mat-card-title>Challenges</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mt-3 challenge">
+  
+        <div  *ngFor="let challenge of Challenges">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+          <p><b>Challenge</b> : {{challenge.challengesStatus}}</p>  
+          <p>Date : {{challenge.challengesDate | date:'dd-MM-yyyy'}}</p>
+       
+      </div>
+    </div>
+    <hr class="line">
+  </div>
+  
+  </mat-card-content>
+  
+      </mat-card>
+      <mat-card class="w-25">
+        <img src="../../../../../../assets/images/impossible.png" alt="First Card Image" class="card-image">
+      </mat-card>
+    </div>
+  
+  </mat-tab> 
+    </mat-tab-group>
+  
+  
+  </div>
+  <br>
+  <div class="next-previous">
+  <button mat-stroked-button color="primary" class="custom-button" (click)="previousTab()">
+    <mat-icon>keyboard_arrow_left</mat-icon> Previous
+  </button>
+  
+  <button mat-stroked-button color="primary" class="custom-button" (click)="nextTab()">
+    Next<mat-icon>keyboard_arrow_right</mat-icon> 
+  </button>
+  </div>

@@ -1,0 +1,105 @@
+<div class="clearContent"></div><div class="clearContent"></div>
+
+<div class="card p-3">
+
+    <div class="row">
+      <h5>View Completed Project Details </h5>
+  
+        <div class="col-6">
+                    
+  
+                    <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Reference</mat-label>
+                        <input matInput placeholder="Project Title" [value]="project.ptsRef" disabled>
+                      </mat-form-field>
+  
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Project Title</mat-label>
+                        <input matInput placeholder="Project Title" [value]="project.projectTitle" disabled>
+                      </mat-form-field>
+              
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Project Description</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.projectDescription" disabled>
+                      </mat-form-field>
+              
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Estimated Value</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.estimatedValue" disabled>
+                      </mat-form-field>
+              
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.startDate | date:'dd-MM-yyyy'" disabled>
+                      </mat-form-field>
+              
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>End Date</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.endDate | date:'dd-MM-yyyy'" disabled>
+                      </mat-form-field>
+  
+                    </div>
+                    <div class="col-6">
+  
+              
+                      <mat-form-field class="half-width" appearance="outline" *ngIf="authenticationService.roleMatch(['Technical_Leader','Management'])">
+                        <mat-label>Project Manager</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.projectManager" disabled>
+                      </mat-form-field>
+  
+                      <mat-form-field class="half-width" appearance="outline" *ngIf="authenticationService.roleMatch(['Project_Manager','Management'])">
+                        <mat-label>Technical Leader</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.technicalLeader" disabled>
+                      </mat-form-field>
+              
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Project Category</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.projectCategory" disabled>
+                      </mat-form-field>
+  
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>In-House 
+                        </mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.inHouse" disabled>
+                      </mat-form-field>
+  
+                      <mat-form-field class="half-width" appearance="outline">
+                        <mat-label>Outsourced
+                        </mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.outSourced" disabled>
+                      </mat-form-field>
+  
+                      <mat-form-field class="half-width" appearance="outline" *ngIf="project.comments">
+                        <mat-label>Additional Information</mat-label>
+                        <input matInput placeholder="Placeholder" [value]="project.comments" disabled>
+                      </mat-form-field>
+                      
+  
+                      <div>
+
+              <h6>Business Case</h6> 
+                      <div *ngFor="let businessCase of BusinessCase">
+                        <mat-icon class="download-icon" (click)="downloadBusinessCase(businessCase.fileId)">get_app</mat-icon>
+                        {{businessCase.fileName}}
+                      </div>
+                      
+  
+                    </div>
+                     
+            
+        </div>
+        <div class="col-6">
+  
+          <div *ngIf="project">
+            <button class="custom-button" mat-stroked-button color="primary" routerLink="/project/completed">Back</button>
+          </div>
+          
+          
+  
+        </div>
+  
+  
+    
+    </div>
+  </div>
+  

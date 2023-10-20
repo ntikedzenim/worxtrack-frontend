@@ -1,0 +1,120 @@
+   <div class="row marleft" *ngIf="authenticationService.roleMatch(['Project_Manager'])">
+
+    <div class="loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="clearContent"></div><div class="clearContent"></div><div class="clearContent"></div>
+    
+
+    <div class="col m12 s12 mat-elevation-z8">
+      <h6>Add New Project</h6>
+    
+      <form [formGroup]="projectForm" (ngSubmit)="addProject()">
+        <mat-form-field class="half-width" appearance="outline">
+          <mat-label>Project Title </mat-label> 
+          <input  class="inputData" matInput formControlName="projectTitle"   > 
+    </mat-form-field>
+    <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Project Description</mat-label>
+        <input class="inputData" matInput formControlName="projectDescription"   > 
+    </mat-form-field>
+    
+    <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Start Date</mat-label>
+        <input matInput [matDatepicker]="startDatePicker" (dateChange)="setStartDate($event)" formControlName="startDate"
+        readonly required>
+        <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </mat-form-field>
+    
+      <mat-form-field class="half-width" appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" (dateChange)="setEndDate($event)" formControlName="endDate"
+        readonly required>
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    
+    
+      <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Estimated Value</mat-label>
+        <input matInput placeholder="Placeholder" formControlName="estimatedValue"  required>
+        <mat-error *ngIf="projectForm.get('estimatedValue').hasError('notANumber')">
+          Please enter a valid number only.
+        </mat-error>
+      </mat-form-field>
+
+
+    <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Directorate/Unit</mat-label>
+      <mat-select formControlName="unit" [(ngModel)]="selectedUnit">
+        <mat-option value="ICT Application">ICT Application</mat-option>
+        <mat-option value="ICT Projects">ICT Projects</mat-option>
+        <mat-option value="ICT Support">ICT Support</mat-option>
+        <mat-option value="Other">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+      
+
+      <mat-form-field class="half-width" appearance="outline" *ngIf="selectedUnit === 'Other'">
+        <mat-label>Enter Directorate/Unit</mat-label>
+        <input matInput formControlName="otherUnit" placeholder="Enter Directorate/Unit">
+      </mat-form-field>
+      
+
+    
+      <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Project Category</mat-label>
+        <mat-select formControlName="projectCategory">
+          <mat-option value="Software Licence">Software Licence</mat-option>
+          <mat-option value="Hardware">Hardware</mat-option>
+          <mat-option value="System">System</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="half-width" appearance="outline">
+        <mat-label>Technical Leader</mat-label>
+        <input matInput placeholder="Placeholder" formControlName="technicalLeader"
+          (click)="openSearchDialog()" required readonly>
+          <mat-icon matSuffix (click)="openSearchDialog()">search</mat-icon>
+      </mat-form-field>
+      
+      <input type="hidden" placeholder="Placeholder" formControlName="technicalLeaderEmail">
+
+
+      <mat-form-field class="half-width" appearance="outline">
+        <mat-label> Additional Information </mat-label>
+        <input matInput formControlName="comments" >
+      </mat-form-field>
+
+      <div class="d-flex align-items-center">
+        <span class="mr-2">In-House &nbsp;&nbsp;&nbsp;</span> &nbsp;&nbsp;
+        <mat-button-toggle-group aria-label="Font Style" formControlName="inHouse" required (change)="disableOutsourced($event.value)">
+          <mat-button-toggle value="Yes">Yes</mat-button-toggle>
+          <mat-button-toggle value="No">No</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      <br>
+      <div class="d-flex align-items-center">
+        <span class="mr-2">Outsourced</span> &nbsp;&nbsp;
+        <mat-button-toggle-group aria-label="Font Style" formControlName="outSourced" required (change)="disableInHouse($event.value)">
+          <mat-button-toggle value="Yes">Yes</mat-button-toggle>
+          <mat-button-toggle value="No">No</mat-button-toggle>
+        </mat-button-toggle-group>
+      </div>
+      
+      <br>
+      
+      
+    
+
+        <button type="submit" class="custom-button" mat-stroked-button color="primary" [disabled]="!projectForm.valid">Add Project</button>
+        <button class="custom-button" mat-stroked-button color="primary" routerLink="/">Back</button>
+      </form>
+      <div class="clearContent"></div>
+    </div>
+  </div>
+  
+  
+  
+  

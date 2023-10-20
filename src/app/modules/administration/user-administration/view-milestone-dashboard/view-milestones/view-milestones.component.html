@@ -1,0 +1,836 @@
+<div class="clearContent"></div><div class="clearContent"></div>
+
+<h4> Milestones: {{project.projectTitle}}</h4>
+
+<mat-tab-group>
+    <mat-tab label="Business Case - BSC Meeting" >
+
+        <div class="card-container mt-3">
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Business Case</mat-card-title>
+            </mat-card-header>
+          
+            <mat-card-content class="mt-3">
+              <div *ngFor="let procurement of BusinessCase"> 
+                <p>File Name: {{ procurement.fileName }}</p>
+                <p>Date: {{ extractDate(procurement.ptsRef) | date:'dd-MM-yyyy' }}</p>
+                <hr  class="line">
+              </div>
+            </mat-card-content>
+          </mat-card>
+          
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>SCM Practitioner</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="mt-3">
+
+              <div  *ngFor="let procurement of ScmPractitioners">
+                <p>Name : {{procurement.scmPractitionerStatus}}</p>  
+                <p>Date : {{procurement.scmPractitionerDate | date:'dd-MM-yyyy' }}</p>
+                <hr  class="line">
+              </div>
+
+
+            </mat-card-content>
+          </mat-card>
+
+           
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>BSC Formation</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="mt-3">
+
+              <div  *ngFor="let procurement of BscFormations">
+                <p>Status : {{procurement.bscFormationStatus}}</p>  
+                <p>Date : {{procurement.bscFormationDate | date:'dd-MM-yyyy' }}</p>
+                <hr  class="line">
+              </div>
+
+            </mat-card-content>
+
+          </mat-card>
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>BSC Meeting</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="mt-3">
+
+              <div  *ngFor="let procurement of BscMeetings">
+                <p>Status : {{procurement.bscMeetingStatus}}</p>  
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                <p>Date : {{procurement.bscMeetingDate | date:'dd-MM-yyyy'}}</p>
+                <hr  class="line">
+              </div>
+
+            </mat-card-content>
+
+          </mat-card>
+
+
+
+        </div>
+
+    </mat-tab>
+
+    <mat-tab label="ToR Endorsed - Submitted to SCM/NBAC" >
+
+        <div class="card-container mt-3">
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>ToR Endorsed</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="mt-3">
+
+              <div  *ngFor="let procurement of ToREndorseds">
+                <p>Status : {{procurement.torEndorsedStatus}}</p>  
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                <p>Date : {{procurement.torEndorsedDate | date:'dd-MM-yyyy'}}</p>
+                <hr  class="line">
+              </div>
+
+            </mat-card-content>
+
+          </mat-card>
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Procurement Strategy</mat-card-title>
+            </mat-card-header>
+
+            <mat-card-content class="mt-3">
+
+              <div  *ngFor="let procurement of ProcurementStrategies">
+                <p>Status : {{procurement.procurementStrategyStatus}}</p>  
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                <p>Date : {{procurement.procurementStrategyDate | date:'dd-MM-yyyy'}}</p>
+                <hr  class="line">
+              </div>
+
+            </mat-card-content>
+
+          </mat-card>
+
+          <mat-card class="w-25">
+            <mat-card-header>
+              <mat-card-title>Budget Confirmation</mat-card-title>
+            </mat-card-header>
+  
+            <mat-card-content class="mt-3">
+  
+              <div  *ngFor="let procurement of BudgetConfirmations">
+                <p>Status : {{procurement.budgetConfirmationStatus}}</p>  
+                <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+                <p>Date : {{procurement.budgetConfirmationDate | date:'dd-MM-yyyy'}}</p>
+                <hr  class="line">
+              </div>
+  
+            </mat-card-content>
+  
+            
+          </mat-card>
+
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Submitted to SCM/NBAC</mat-card-title>
+          </mat-card-header>
+
+          <mat-card-content class="mt-3">
+
+            <div  *ngFor="let procurement of SubmittedNBACS">
+              <p>Status : {{procurement.submittedNbacStatus}}</p>  
+              <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+              <p>Date : {{procurement.submittedNbacDate | date:'dd-MM-yyyy'}}</p>
+              <hr  class="line">
+            </div>
+
+          </mat-card-content>
+          
+
+        </mat-card>
+
+        
+
+        </div>
+
+    </mat-tab>
+
+    <!-- <mat-tab label="BSC Meeting for corrections - Approved by the NBAC" >
+
+      <div class="card-container mt-3">
+
+          <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>BSC Meeting for corrections</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+
+                <div  *ngFor="let procurement of BscMeetingCorrections">
+                  <p>Status : {{procurement.bscMeetingCorrectionsStatus}}</p>  
+                  <p>Date : {{procurement.bscMeetingCorrectionsDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+
+              </mat-card-content>
+              
+            </mat-card>
+
+
+
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Resubmitted to the NBAC</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+  
+                <div  *ngFor="let procurement of ResubmittedNBACS">
+                  <p>Status : {{procurement.resubmittedNbacStatus}}</p>  
+                  <p>Date : {{procurement.resubmittedNbacDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+
+              </mat-card-content>
+              
+            </mat-card>
+
+            <mat-card class="w-25">
+              <mat-card-header>
+                <mat-card-title>Approved by the NBAC</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+
+                <div  *ngFor="let procurement of ApprovedNBACS">
+                  <p>Status : {{procurement.approvedNBACStatus}}</p>  
+                  <p>Date : {{procurement.approvedNBACDate | date:'dd-MM-yyyy'}}</p>
+                </div>
+  
+              </mat-card-content>
+              
+            </mat-card>
+
+      </div>
+
+  </mat-tab> -->
+
+  <mat-tab label="Feedback from the NBAC - Tender Closure" >
+
+    <div class="card-container mt-3">
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Feedback from the NBAC</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div  *ngFor="let procurement of FeedbackNBACS">
+            <p>Status : {{procurement.feedbackNBACStatus}}</p> 
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p> 
+            <p>Date : {{procurement.feedbackNBACDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+        
+      </mat-card>
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Tender Advertised</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div  *ngFor="let procurement of TenderAdvertiseds">
+            <p>Status : {{procurement.tenderAdvertisedStatus}}</p>  
+            <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+            <p>Date : {{procurement.tenderAdvertisedDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+        
+      </mat-card>
+
+			<mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Briefing Session</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div  *ngFor="let procurement of BriefingSessions">
+            <p>Status : {{procurement.briefingSessionStatus}}</p>  
+            <p>Date : {{procurement.briefingSessionDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+        
+      </mat-card>
+
+			<mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Tender Closure</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+
+          <div  *ngFor="let procurement of TenderClosures">
+            <p>Status : {{procurement.tenderClosureStatus}}</p>  
+            <p>Date : {{procurement.tenderClosureDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+       
+      </mat-card>
+
+
+
+    </div>
+
+</mat-tab>
+
+<mat-tab label="BEC Formation - NBAC feedback on recommendation" >
+
+  <div class="card-container mt-3">
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>BEC Formation</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of BecFormations">
+          <p>Status : {{procurement.becFormationStatus}}</p>  
+          <p>Date : {{procurement.becFormationDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+     
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>BEC Meeting for evaluation</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mt-3">
+
+        <div  *ngFor="let procurement of BecMeetings">
+          <p>Status : {{procurement.becMeetingStatus}}</p>  
+          <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+          <p>Date : {{procurement.becMeetingDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Reconfirmation of budget</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of ReconfirmationOfBudgets">
+          <p>Status : {{procurement.reconfirmationBudgetStatus}}</p>  
+          <p>Date : {{procurement.reconfirmationBudgetDate | date:'dd-MM-yyyy'}}</p>
+        </div>
+
+      </mat-card-content>
+      
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Submit recommendation to the NBAC</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of SubmitRecommendationNBACS">
+          <p>Status : {{procurement.submitRecommendationNbacStatus}}</p>  
+          <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+          <p>Date : {{procurement.submitRecommendationNbacDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+     
+    </mat-card>
+
+
+
+
+
+    <!-- <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>BEC Meeting for corrections</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of BecMeetingCorrections">
+          <p>Status : {{procurement.becMeetingCorrectionsStatus}}</p>  
+          <p>Date : {{procurement.becMeetingCorrectionsDate | date:'dd-MM-yyyy'}}</p>
+        </div>
+
+      </mat-card-content>
+      
+    </mat-card> -->
+
+  </div>
+
+</mat-tab>
+
+<mat-tab label="Resubmitted to the NBAC - Award Letter" >
+
+  <div class="card-container mt-3">
+
+    <!-- <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Resubmitted to the NBAC</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="mt-3">
+
+        <div  *ngFor="let procurement of ResubmittedNBAC2s">
+          <p>Status : {{procurement.resubmittedNbac2Status}}</p>  
+          <p>Date : {{procurement.resubmittedNbac2Date | date:'dd-MM-yyyy'}}</p>
+        </div>
+
+      </mat-card-content>
+
+    
+
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Approved by the NBAC</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of ApprovedNBAC2s">
+          <p>Status : {{procurement.approvedNBAC2Status}}</p>  
+          <p>Date : {{procurement.approvedNBAC2Date | date:'dd-MM-yyyy'}}</p>
+        </div>
+
+      </mat-card-content>
+     
+    </mat-card> -->
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>NBAC feedback on recommendation</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of NbacFeedbackRecommendations">
+          <p>Status : {{procurement.nbacFeedbackRecommendationStatus}}</p>  
+          <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+          <p>Date : {{procurement.nbacFeedbackRecommendationDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+    
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Submitted Legal Services</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of LegalServices">
+          <p>Status : {{procurement.legalServicesStatus}}</p>  
+          <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>
+          <p>Date : {{procurement.legalServicesDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+     
+    </mat-card>
+
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Award Letter</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+
+        <div  *ngFor="let procurement of AwardLetters">
+          <p>Status : {{procurement.awardLetterStatus}}</p>
+          <p *ngIf="procurement.remarks">Remarks: {{procurement.remarks}}</p>  
+          <p>Date : {{procurement.awardLetterDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+      
+    </mat-card>
+
+    <mat-card class="w-25">  </mat-card>
+    <!-- <mat-card class="w-25">  </mat-card> -->
+
+  </div>
+
+</mat-tab>
+
+
+<mat-tab label="Awarded Project Value - Kick-off Meeting" >
+
+    <div class="card-container mt-3">
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Awarded Project Value</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of AwardedProjectValue">
+            <p>Status : {{projectValue.awardedProjectValueStatus | currency: 'ZAR': 'symbol-narrow': '1.2-2'}}</p>  
+            <p>Date : {{projectValue.awardedProjectValueDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+       
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Expenditure</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of Expenditure">
+            <p>Status : {{projectValue.expenditureStatus | currency: 'ZAR': 'symbol-narrow': '1.2-2'}}</p>  
+            <p>Date : {{projectValue.expenditureDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Appointed Service Provider</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of AppointedServiceProvider">
+            <p>Status : {{projectValue.appointedServiceProviderStatus}}</p>  
+            <p>Date : {{projectValue.appointedServiceProviderDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Kick-off Meeting</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of KickOffMeeting">
+            <p>Status : {{projectValue.kickoffMeetingStatus}}</p>  
+            <p>Date : {{projectValue.kickoffMeetingDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+    </div>
+
+</mat-tab>
+
+<mat-tab label="Purchase order - Information Gathering / URS" >
+
+    <div class="card-container mt-3">
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Purchase order</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of PurchaseOrders">
+            <p>Status : {{projectValue.purchaseOrderStatus}}</p>  
+            <p>Date : {{projectValue.purchasedOrderDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+      <mat-card class="w-25">
+        <mat-card-header>
+          <mat-card-title>Project Charter</mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content class="mt-3">
+
+          <div *ngFor="let projectValue of ProjectCharters">
+            <p>Status : {{projectValue.projectCharterStatus}}</p>  
+            <p>Date : {{projectValue.projectCharterDate | date:'dd-MM-yyyy'}}</p>
+            <hr  class="line">
+          </div>
+
+        </mat-card-content>
+
+
+      </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Service Level / License Agreement</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="mt-3">
+
+        <div *ngFor="let projectValue of ServiceLevelAgreements">
+          <p>Status : {{projectValue.serviceLevelStatus}}</p>  
+          <p>Date : {{projectValue.serviceLevelDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+      
+
+    </mat-card>
+
+    <mat-card class="w-25">
+      <mat-card-header>
+        <mat-card-title>Information Gathering / URS</mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content class="mt-3">
+
+        <div *ngFor="let projectValue of InformationGatherings">
+          <p>Status : {{projectValue.informationGatheringStatus}}</p>  
+          <p>Date : {{projectValue.informationGatheringDate | date:'dd-MM-yyyy'}}</p>
+          <hr  class="line">
+        </div>
+
+      </mat-card-content>
+
+
+    </mat-card>
+
+    </div>
+
+</mat-tab>
+
+<mat-tab label="Architectural Design / FRS - Installation & Configuration" >
+
+  <div class="card-container mt-3">
+
+      <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Architectural Design / FRS</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div *ngFor="let projectValue of ArchitecturalDesigns">
+              <p>Status : {{projectValue.architecturalDesignStatus}}</p>  
+              <p>Date : {{projectValue.architecturalDesignDate | date:'dd-MM-yyyy'}}</p>
+              <hr  class="line">
+            </div>
+          </mat-card-content>
+
+        </mat-card>
+
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Software Delivered</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <div *ngFor="let projectValue of SoftwareDeliveries">
+              <p>Status : {{projectValue.softwareDeliveredStatus}}</p>  
+              <p>Date : {{projectValue.softwareDeliveredDate | date:'dd-MM-yyyy'}}</p>
+              <hr  class="line">
+            </div> 
+          </mat-card-content>
+
+        </mat-card>
+
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Hardware Delivered</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <div *ngFor="let projectValue of HardwareDeliveries">
+              <p>Status : {{projectValue.hardwareDeliveredStatus}}</p>  
+              <p>Date : {{projectValue.hardwareDeliveredDate | date:'dd-MM-yyyy'}}</p>
+              <hr  class="line">
+            </div> 
+
+          </mat-card-content>
+
+        </mat-card>
+
+        <mat-card class="w-25">
+          <mat-card-header>
+            <mat-card-title>Installation & Configuration</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+
+            <div *ngFor="let projectValue of InstallationAndConfigurations">
+              <p>Status : {{projectValue.installationStatus}}</p>  
+              <p>Date : {{projectValue.installationDate | date:'dd-MM-yyyy'}}</p>
+              <hr  class="line">
+            </div>
+
+          </mat-card-content>
+
+        </mat-card>
+
+  </div>
+
+</mat-tab>
+
+<mat-tab label="System Development/Enhancement - Challenges" >
+
+<div class="card-container mt-3">
+
+  <mat-card class="w-25">
+    <mat-card-header>
+      <mat-card-title>System Development/Enhancement</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div *ngFor="let projectValue of SystemDevelopmentEnhancements">
+        <p>Status : {{projectValue.systemDevelopmentStatus}}</p>  
+        <p>Date : {{projectValue.systemDevelopmentDate | date:'dd-MM-yyyy'}}</p>
+        <hr  class="line">
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+        <mat-card class="w-25">
+    <mat-card-header>
+      <mat-card-title>Solution Testing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div *ngFor="let projectValue of SolutionTestings">
+        <p>Status : {{projectValue.solutionTestingStatus}}</p>  
+        <p>Date : {{projectValue.solutionTestingDate | date:'dd-MM-yyyy'}}</p>
+        <hr  class="line">
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+        <mat-card class="w-25">
+    <mat-card-header>
+      <mat-card-title>Progress to date</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div *ngFor="let projectValue of ProgressToDates">
+        <p>Status : {{projectValue.progressStatus}}</p>  
+        <p>Date : {{projectValue.progressDate | date:'dd-MM-yyyy'}}</p>
+        <hr  class="line">
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+        <mat-card class="w-25">
+    <mat-card-header>
+      <mat-card-title>Challenges</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+
+      <div *ngFor="let projectValue of Challenges">
+        <p>Status : {{projectValue.challengesStatus}}</p>  
+        <p>Date : {{projectValue.challengesDate | date:'dd-MM-yyyy'}}</p>
+        <hr  class="line">
+      </div>
+
+    </mat-card-content>
+
+  </mat-card>
+
+</div>
+
+</mat-tab>
+
+<mat-tab label="Close-out / Hand-over Report" >
+
+<div class="card-container mt-3">
+
+<mat-card class="w-25">
+  <mat-card-header>
+    <mat-card-title>Close-out / Hand-over Report</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="mt-3">
+
+    <div *ngFor="let projectValue of CloseOutHandOverReports">
+      <p>Status : {{projectValue.closeOutStatus}}</p>  
+      <p>Date : {{projectValue.closeoutDate | date:'dd-MM-yyyy'}}</p> 
+      <hr  class="line">
+    </div>
+
+  </mat-card-content>
+
+
+
+</mat-card>
+<mat-card class="w-25">
+
+</mat-card>
+<mat-card class="w-25">
+    
+</mat-card>
+<mat-card class="w-25">
+    
+</mat-card> 
+
+</div>
+
+</mat-tab>
+
+  </mat-tab-group>
+
+  
+
+  <br>
+<div>
+  <!-- <button class="custom-button" mat-stroked-button color="primary" (click)="exportToExcel()">Export to Excel</button> -->
+  <button class="custom-button" mat-stroked-button color="primary" routerLink="/project/view-milestones">Back</button>
+</div>
