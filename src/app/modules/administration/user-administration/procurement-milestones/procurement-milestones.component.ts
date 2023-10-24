@@ -1233,13 +1233,13 @@ completionStatus: boolean[] = [false, false, false, false, false];
   }
 
 
-  isScmPractitionerStatusEmpty(): boolean {
-    return this.ScmPractitioners.length === 0 || !this.ScmPractitioners[0].scmPractitionerStatus;
-  }
+  // isScmPractitionerStatusEmpty(): boolean {
+  //   return this.ScmPractitioners.length === 0 || !this.ScmPractitioners[0].scmPractitionerStatus;
+  // }
 
-  isBscFormationNotApproved(procurement): boolean {
-    return procurement.bscFormationStatus !== 'Approved' || procurement.bscFormationStatus == 'Submited';
-  }
+  // isBscFormationNotApproved(procurement): boolean {
+  //   return procurement.bscFormationStatus !== 'Approved' || procurement.bscFormationStatus == 'Submited';
+  // }
 
   // isBscFormationDropdownActive: boolean = false;
 

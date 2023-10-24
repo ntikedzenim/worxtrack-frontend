@@ -124,7 +124,7 @@
                             <tr>
                               <th>File Name</th>
                               <th>Download</th>
-                              <th>Preview</th>
+                              <!-- <th>Preview</th> -->
                               <th>Delete</th>
                             </tr>
                           </thead>
@@ -135,10 +135,9 @@
                                 <td>
                                   <mat-icon class="download-icon" (click)="downloadBusinessCase(businessCase.fileId)">get_app</mat-icon>
                                 </td>
-                                <td>
-                                  <!-- Updated "Preview" link to call the previewDocument method -->
+                                <!-- <td>
                                   <a href="javascript:void(0)" (click)="previewDocument(businessCase.fileId)">Preview</a>
-                                </td>
+                                </td> -->
                                 <td>
                                   <mat-icon class="delete-icon" (click)="deleteFile(businessCase.fileId)">delete</mat-icon>
                                 </td>
@@ -147,11 +146,10 @@
                           </tbody>
                         </table>
                         
-                        <div *ngIf="documentUrl">
-                          <!-- Updated iframe to bind to the documentUrl with target="_blank" -->
+                        <!-- <div *ngIf="documentUrl">
                           <iframe [src]="documentUrl" width="100%" height="600" target="_blank"></iframe>
                         </div>
-                         
+                          -->
                   
                         <div class="clearContent"></div><div class="clearContent"></div>
                      

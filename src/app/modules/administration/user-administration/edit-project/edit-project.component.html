@@ -76,7 +76,7 @@
             <input matInput placeholder="Placeholder" [(ngModel)]="project.comments" name="comments">
           </mat-form-field>
 
-          <!-- <mat-form-field class="half-width" appearance="outline">
+          <mat-form-field class="half-width" appearance="outline">
             <mat-label>Status</mat-label>
             <mat-select [(ngModel)]="project.status" name="status" required>
               <ng-container *ngIf="project.status !== 'Completed'; else completedStatus">
@@ -92,26 +92,26 @@
                 <mat-option value="Completed">Completed</mat-option>
               </ng-template>
             </mat-select>
-          </mat-form-field> -->
+          </mat-form-field>
 
-<mat-form-field class="half-width" appearance="outline">
-  <mat-label>Status</mat-label>
-  <mat-select [(ngModel)]="project.status" name="status" required>
-    <ng-container *ngIf="project.status === 'Completed'; else otherStatus">
-      <mat-option value="Completed">Completed</mat-option>
-    </ng-container>
-    <ng-template #otherStatus>
-      <mat-option *ngFor="let option of ['Waiting for Business Case', 'Procurement in Progress', 'Implementation in Progress', 'On Hold', 'Cancelled']" [value]="option" [disabled]="option !== 'On Hold' && option !== 'Cancelled'">{{ option }}</mat-option>
-    </ng-template>
-  </mat-select>
-</mat-form-field>
+          <!-- <mat-form-field class="half-width" appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select [(ngModel)]="project.status" name="status" required>
+              <ng-container *ngIf="project.status === 'Completed'; else otherStatus">
+                <mat-option value="Completed">Completed</mat-option>
+              </ng-container>
+              <ng-template #otherStatus>
+                <mat-option *ngFor="let option of ['Waiting for Business Case', 'Procurement in Progress', 'Implementation in Progress', 'On Hold', 'Cancelled']" [value]="option" [disabled]="option !== 'On Hold' && option !== 'Cancelled'">{{ option }}</mat-option>
+              </ng-template>
+            </mat-select>
+          </mat-form-field> -->
 
           
           
 
           <mat-form-field class="half-width" appearance="outline" *ngIf="project.status === 'On Hold' || project.status === 'Cancelled'">
             <mat-label>Reason for putting the project On Hold/Cancelled</mat-label>
-            <input matInput placeholder="Placeholder" [(ngModel)]="project.reason" name="reason">
+            <input matInput placeholder="Placeholder" [(ngModel)]="project.reason" name="reason" required>
           </mat-form-field>
   
           <div class="d-flex align-items-center">
