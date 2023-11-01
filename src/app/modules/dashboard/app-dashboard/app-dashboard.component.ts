@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 })
 export class AppDashboardComponent implements OnInit {
 
+  showActionButtons: boolean = false;
   daysBetween: any;
 
   filterValue: string;
@@ -56,17 +57,27 @@ export class AppDashboardComponent implements OnInit {
   currentUserSubscription: Subscription; 
 
 
-  displayedColumns: string[] = ['projectTitle', 'dateCreated', 'daysSinceCreation', 'status', 'view'];
-  dataSource: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  displayedColumns: string[] = ['projectTitle', 'dateCreated', 'daysSinceCreation', 'status', 'action'];
+  // dataSource: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  dataSource = new MatTableDataSource<ProjectDetails>();
 
   displayedColumns1: string[] = ['projectTitle', 'dateCreated', 'daysSinceCreation', 'status', 'view'];
-  dataSource1: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  // dataSource1: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  dataSource1 = new MatTableDataSource<ProjectDetails>();
 
   displayedColumns2: string[] = ['projectTitle', 'dateCreated', 'daysSinceCreation', 'status', 'view'];
-  dataSource2: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  // dataSource2: MatTableDataSource<ProjectDetails> = new MatTableDataSource<ProjectDetails>();
+  dataSource2 = new MatTableDataSource<ProjectDetails>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild(MatSort) sort1: MatSort;
+  @ViewChild('paginator1') paginator1: MatPaginator;
+  @ViewChild(MatSort) sort2: MatSort;
+  @ViewChild('paginator2') paginator2: MatPaginator;
   
 
   constructor(private projectService: ProjectService, public authenticationService: AuthenticationService, private router: Router,) {
@@ -87,7 +98,8 @@ export class AppDashboardComponent implements OnInit {
     this.projectService.getALLProject().subscribe({
       next: (response: ProjectDetails[] | ProjectDetails) => {
         if (Array.isArray(response)) {
-          this.dataSource1 = new MatTableDataSource(response);
+          // this.dataSource1 = new MatTableDataSource(response);
+          this.dataSource1.data = response as unknown as ProjectDetails[];
         } else {
           this.dataSource1 = new MatTableDataSource([response]);
         }
@@ -106,7 +118,9 @@ export class AppDashboardComponent implements OnInit {
     this.projectService.getProjectsByCurrentUser(this.currentUser.email_address).subscribe({
       next: (response: ProjectDetails[] | ProjectDetails) => {
         if (Array.isArray(response)) {
-          this.dataSource = new MatTableDataSource(response);
+
+          this.dataSource.data = response as unknown as ProjectDetails[];
+          // this.dataSource = new MatTableDataSource(response);
         } else {
           this.dataSource = new MatTableDataSource([response]);
         }
@@ -124,7 +138,8 @@ export class AppDashboardComponent implements OnInit {
   getAllTechProject() {
       this.projectService.getProjectsByTechnicalUser(this.currentUser.email_address).subscribe(
         (response: ProjectDetails[]) => {
-          this.dataSource2 = new MatTableDataSource(response);
+          // this.dataSource2 = new MatTableDataSource(response);
+          this.dataSource2.data = response as unknown as ProjectDetails[];
           console.log("Response received:", response);
         },
         (error: HttpErrorResponse) => {
@@ -213,6 +228,25 @@ export class AppDashboardComponent implements OnInit {
     
     return { months: monthsBetween, days: dayDiff };
   }
+
+    // This function calculates the project progress percentage
+    getProjectProgress(row) {
+      const projectStartDate = new Date(row.startDate); // Replace with the actual start date field in your data
+      const projectEndDate = new Date(row.endDate); // Replace with the actual end date field in your data
+      const currentDate = new Date();
+  
+      // Calculate the total duration of the project in milliseconds
+      const totalDuration = projectEndDate.getTime() - projectStartDate.getTime();
+  
+      // Calculate the elapsed duration of the project in milliseconds
+      const elapsedDuration = currentDate.getTime() - projectStartDate.getTime();
+  
+      // Calculate the progress percentage
+      const progressPercentage = (elapsedDuration / totalDuration) * 100;
+  
+      // Ensure the progress percentage doesn't go below 0 or above 100
+      return Math.min(Math.max(progressPercentage, 0), 100);
+    }
    
   
 
@@ -337,6 +371,23 @@ export class AppDashboardComponent implements OnInit {
     } else {
       console.error('Invalid project:', project);
     }
+    this.showActionButtons = !this.showActionButtons;
+  }
+
+  editProject(project: ProjectDetails) {
+    this.router.navigate(['/project/edit/projectDetails', project.ptsRef]);
+    console.log('edit project:', project);
+    this.showActionButtons = !this.showActionButtons;
+  }
+
+  uploadFile(project: ProjectDetails) {
+    this.router.navigate(['/project/upload', project.ptsRef]);
+    console.log('Upload business case:', project);
+    this.showActionButtons = !this.showActionButtons;
+  }
+
+  toggleActionButtons() {
+    this.showActionButtons = !this.showActionButtons;
   }
   
 
@@ -418,9 +469,13 @@ export class AppDashboardComponent implements OnInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.dataSource1.paginator = this.paginator;
-    this.dataSource2.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.dataSource2.paginator = this.paginator2;
+    this.dataSource2.sort = this.sort2;
+
+    this.dataSource1.paginator = this.paginator1;
+    this.dataSource1.sort = this.sort1;
   }
 
 }

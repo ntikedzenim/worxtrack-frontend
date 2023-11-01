@@ -18,11 +18,12 @@ import { ReportComponent } from './report/report.component';
 import { ViewMilestoneDashboardComponent } from './view-milestone-dashboard/view-milestone-dashboard.component';
 import { ViewMilestonesComponent } from './view-milestone-dashboard/view-milestones/view-milestones.component';
 import { AppDashboardComponent } from '../../dashboard/app-dashboard/app-dashboard.component';
+import { UploadComponent } from './upload/upload.component';
 
 const routes: Routes = [
   { path: 'create-profile', component: CreateProfileComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin'] } },
   { path: 'update-profile', component: UpdateProfileComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin'] } },
-  // { path: 'dashboard', component: AppDashboardComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin','Project_Manager','Technical_Leader','Management'] } },
+  { path: 'upload/:ptsRef', component: UploadComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin','Project_Manager','Technical_Leader'] } },
   { path: 'new-project', component: AddProjectComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin','Project_Manager'] } },
   { path: 'completed', component: CompletedProjectsComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin','Project_Manager','Technical_Leader','Management'] } },
   { path: 'closed', component: ClosedProjectsComponent, canActivate: [AuthGuard], data: { roles: ['System_Admin','Project_Manager','Technical_Leader','Management'] } },

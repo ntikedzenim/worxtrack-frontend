@@ -325,4 +325,44 @@ td, th {
   background-color: rgb(235, 135, 14);
 }
 
+/* Custom CSS class to style small icon buttons */
+.action-buttons {
+  display: flex;
+  flex-direction: row; /* This makes the icons appear horizontally */
+  align-items: center; /* Optional: Center the icons vertically */
+}
+
+.small-icon-button {
+  margin-right: 10px; /* Optional: Add some spacing between the icons */
+}
+
+
+/* Custom CSS class to horizontally align icons within a container */
+.icon-buttons-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Style for the progress bar container */
+.progress-bar {
+  width: 98%; /* Adjust the width as needed */
+  height: 15px; /* Adjust the height as needed */
+  background-color: #fff; /* Background color of the progress bar container */
+  border-radius: 4px; /* Rounded corners for the container */
+}
+
+/* Style for the progress bar */
+.progress {
+  height: 100%;
+  line-height: 15px;
+  text-align: center;
+  color: #000; /* Text color of the percentage label */
+  background-color: rgb(235, 135, 14); /* Background color of the progress bar */
+  border-radius: 4px; /* Rounded corners for the progress bar */
+  transition: width 0.5s; /* Smooth transition for the width changes */
+}
+
 

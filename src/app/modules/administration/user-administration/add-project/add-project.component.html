@@ -12,11 +12,11 @@
       <form [formGroup]="projectForm" (ngSubmit)="addProject()">
         <mat-form-field class="half-width" appearance="outline">
           <mat-label>Project Title </mat-label> 
-          <input  class="inputData" matInput formControlName="projectTitle"   > 
+          <input  class="inputData" matInput formControlName="projectTitle"   required> 
     </mat-form-field>
     <mat-form-field class="half-width" appearance="outline">
         <mat-label>Project Description</mat-label>
-        <input class="inputData" matInput formControlName="projectDescription"   > 
+        <input class="inputData" matInput formControlName="projectDescription"  required > 
     </mat-form-field>
     
     <mat-form-field class="half-width" appearance="outline">
@@ -47,7 +47,7 @@
 
     <mat-form-field class="half-width" appearance="outline">
         <mat-label>Directorate/Unit</mat-label>
-      <mat-select formControlName="unit" [(ngModel)]="selectedUnit">
+      <mat-select formControlName="unit" [(ngModel)]="selectedUnit" required>
         <mat-option value="ICT Application">ICT Application</mat-option>
         <mat-option value="ICT Projects">ICT Projects</mat-option>
         <mat-option value="ICT Support">ICT Support</mat-option>
@@ -65,7 +65,7 @@
     
       <mat-form-field class="half-width" appearance="outline">
         <mat-label>Project Category</mat-label>
-        <mat-select formControlName="projectCategory">
+        <mat-select formControlName="projectCategory" required>
           <mat-option value="Software Licence">Software Licence</mat-option>
           <mat-option value="Hardware">Hardware</mat-option>
           <mat-option value="System">System</mat-option>

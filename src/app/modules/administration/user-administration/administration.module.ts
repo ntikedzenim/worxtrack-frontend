@@ -24,9 +24,10 @@ import { ReportComponent } from './report/report.component';
 import { ViewMilestoneDashboardComponent } from './view-milestone-dashboard/view-milestone-dashboard.component';
 import { ViewMilestonesComponent } from './view-milestone-dashboard/view-milestones/view-milestones.component';
 import { ConfirmDeleteComponent } from './confirm-delete/confirm-delete.component';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
-  declarations: [UpdateProfileComponent, CreateProfileComponent, SupervisorComponent, PmteDpwSupervisorComponent, AddProjectComponent, CompletedProjectsComponent, ClosedProjectsComponent, UpdateMilestonesComponent, SearchDialogComponent, ViewProjectComponent, EditProjectComponent, ProcurementMilestonesComponent, ChallengesComponent, ImplementationMilestonesComponent, ViewClosedComponent, ViewCompletedComponent, EditClosedComponent, ReportComponent, ViewMilestoneDashboardComponent, ViewMilestonesComponent, ConfirmDeleteComponent],
+  declarations: [UpdateProfileComponent, CreateProfileComponent, SupervisorComponent, PmteDpwSupervisorComponent, AddProjectComponent, CompletedProjectsComponent, ClosedProjectsComponent, UpdateMilestonesComponent, SearchDialogComponent, ViewProjectComponent, EditProjectComponent, ProcurementMilestonesComponent, ChallengesComponent, ImplementationMilestonesComponent, ViewClosedComponent, ViewCompletedComponent, EditClosedComponent, ReportComponent, ViewMilestoneDashboardComponent, ViewMilestonesComponent, ConfirmDeleteComponent, UploadComponent],
   imports: [
     CommonModule,
     SharedModule,

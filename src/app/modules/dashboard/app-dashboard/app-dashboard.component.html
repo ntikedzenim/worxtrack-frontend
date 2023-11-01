@@ -85,7 +85,7 @@
       </mat-form-field>
       
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSource1" matSort>
+        <table mat-table [dataSource]="dataSource1" matSort1>
           <!-- Project Title Column -->
           <ng-container matColumnDef="projectTitle">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Title </th>
@@ -142,7 +142,7 @@
             <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"</td>
           </tr>
         </table>
-        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"  [length]="dataSource1.data.length"></mat-paginator>
+        <mat-paginator #paginator1 [pageSizeOptions]="[5, 10, 25, 100]"  [length]="dataSource1.data.length"></mat-paginator>
       
       </div>
       </div>
@@ -246,8 +246,16 @@
       <td mat-cell *matCellDef="let row">
         {{ getCalculateMonthsAndDaysBetween(row).months }} months
         {{ getCalculateMonthsAndDaysBetween(row).days }} days
+    
+        <div class="progress-bar">
+          <div class="progress" [style.width]="getProjectProgress(row) + '%'">
+            {{ getProjectProgress(row).toFixed(2) }}%
+          </div>
+        </div>
       </td>
     </ng-container>
+    
+    
 
     <!-- Status Column -->
     <ng-container matColumnDef="status">
@@ -267,14 +275,43 @@
     </ng-container>
 
     <!-- View Column -->
-    <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef>View</th>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
       <td mat-cell *matCellDef="let row">
-        <button mat-icon-button color="primary" aria-label="view"  (click)="viewProject(row)">
-          <mat-icon>visibility</mat-icon>
+        <div class="action-buttons" *ngIf="showActionButtons">
+          <button mat-icon-button class="small-icon-button" color="primary" aria-label="additional-action" (click)="uploadFile(row)">
+            <mat-icon>publish</mat-icon>
+          </button>
+          <button mat-icon-button class="small-icon-button" color="primary" aria-label="view" (click)="viewProject(row)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button class="small-icon-button" color="primary" aria-label="view" (click)="editProject(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+        <button mat-icon-button class="small-icon-button" color="primary" (click)="toggleActionButtons()">
+          <mat-icon>menu</mat-icon>
         </button>
       </td>
     </ng-container>
+
+    <!-- <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let row">
+        <div fxLayout="row" fxLayoutAlign="flex-end">
+          <button mat-icon-button class="small-icon-button" color="primary" aria-label="view" (click)="viewProject(row)">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button class="small-icon-button" color="accent" aria-label="update" (click)="updateProject(row)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </td>
+    </ng-container> -->
+    
+    
+    
+    
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -285,7 +322,7 @@
     </tr>
   </table>
   
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length"></mat-paginator>
+    <mat-paginator #paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource.data.length"></mat-paginator>
   </div>
 </div>
 
@@ -369,7 +406,7 @@
 
 <div class="mat-elevation-z8">
 
-<table mat-table [dataSource]="dataSource2" matSort>
+<table mat-table [dataSource]="dataSource2" matSort2>
 <!-- Project Title Column -->
 <ng-container matColumnDef="projectTitle">
   <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Title </th>
@@ -423,7 +460,7 @@
 </tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource2.data.length"></mat-paginator>
+<mat-paginator #paginator2 [pageSizeOptions]="[5, 10, 25, 100]" [length]="dataSource2.data.length"></mat-paginator>
 </div>
 </div>
 
